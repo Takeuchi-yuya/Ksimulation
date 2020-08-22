@@ -2,7 +2,6 @@
 
 ### 始めに
 - 追加事項があればその都度追記していく。
-- 後世にも利用改良がしやすいことを考えるとgit無しでもいいかも？
 - version管理と追記は、version.mdに記していくことにする。
 - このREADME.mdの追記も一応下にまとめとく。
 - この [命名規則](https://qiita.com/naomi7325/items/4eb1d2a40277361e898b) に則っていくといいかも？
@@ -19,7 +18,7 @@
 
  $ python -c 'import csv as mpl; print(mpl.__version__)'
  1.0
-
+```
 ### 基本方針
  入力（CAD、CLIどっちかもしくは両方？　両方の場合はmapはCAD、電磁場や粒子のパラメータをCLIで）
 
