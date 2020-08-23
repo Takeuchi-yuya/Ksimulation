@@ -2,9 +2,7 @@
 
 ### 始めに
 - 追加事項があればその都度追記していく。
-- version管理と追記は、version.mdに記していくことにする。
-- このREADME.mdの追記も一応下にまとめとく。
-- この [命名規則](https://qiita.com/naomi7325/items/4eb1d2a40277361e898b) に則っていくといいかも？
+- この [命名規則](https://qiita.com/naomi7325/items/4eb1d2a40277361e898b) に則っていく
 ### 環境
 
 - 私の開発エディタは [atom](https://atom.io)
