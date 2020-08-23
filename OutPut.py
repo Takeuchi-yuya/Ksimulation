@@ -39,15 +39,15 @@ class OutPut():
                     horizontal_list = np.append(horizontal_list,float(tmp_y))
                     vertical_list = np.append(vertical_list , float(tmp_z))
         ax.scatter(horizontal_list,vertical_list)
-        ax.set_title(self.title + " TwoDPlot")
+        ax.set_title(self.title + " 2DPlot(" + losAxis +" = "+ str(value)+")")
         ax.set_xlabel(horizontal_name)
         ax.set_ylabel(vertical_name)
 
         return ax
     def threeDPlot(self,ax):
-        x = np.array([float(i) for i in self.x])
-        y = np.array([float(i) for i in self.y])
-        z = np.array([float(i) for i in self.z])
+        x = self.x
+        y = self.y
+        z = self.z
         ax.scatter3D(x,y,z)
         ax.set_title("Scatter Plot")
         return ax
@@ -58,17 +58,20 @@ if __name__ == '__main__':
          reader = csv.reader(f)
          list = [row for row in reader]
     #dict型に変換
-    plams = {"title":"testdata"}
+    plams = {}
     for l in list:
-        plams[l[0]] = l[1:]
+        if l[0] == "x" or l[0] == "y" or l[0] == "z":
+            plams[l[0]] = np.array([float(i) for i in l[1:]])
+        else:
+            plams[l[0]] = l[1]
     oput = OutPut(plams)
-    fig = plt.figure(figsize=(12, 8))
+    fig = plt.figure(figsize=(10, 7))
     ax = plt.subplot2grid((2,2),(0,0))
     ay = plt.subplot2grid((2,2),(0,1))
     az = plt.subplot2grid((2,2),(1,0))
     a3d = plt.subplot2grid((2,2),(1,1),projection='3d')
-    ax = oput.twoDPlot(ax,"x","0")
-    ay = oput.twoDPlot(ay,"y","0")
-    az = oput.twoDPlot(az,"z","0")
+    ax = oput.twoDPlot(ax,"x",0)
+    ay = oput.twoDPlot(ay,"y",0)
+    az = oput.twoDPlot(az,"z",0)
     a3d = oput.threeDPlot(a3d)
     plt.show()
