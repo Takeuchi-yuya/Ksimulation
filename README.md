@@ -30,5 +30,6 @@
 
 出力
 - matplotlibのグラフ出力を利用する。余裕があればアニメーションとかもやりたい！
+-CADから3D描画したい [参照](https://resp-kke.azurewebsites.net/2020/02/24/programtipspython_plotly3d/)
 
 ### 追記

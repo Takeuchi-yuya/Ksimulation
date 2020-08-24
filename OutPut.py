@@ -46,12 +46,11 @@ class OutPut():
 
         return ax
     def threeDPlot(self,ax):
-        x = self.x
-        y = self.y
-        z = self.z
-        ax.scatter3D(x,y,z)
+        ax.scatter3D(self.x,self.y,self.z)
         ax.set_title("Scatter Plot")
         return ax
+
+
     def vectorTwoDPlot(self,vf,ax,losAxis,value):
         grid_count = 10
         if losAxis == "x":
@@ -127,6 +126,7 @@ if __name__ == '__main__':
                 plams[l[0]] = np.array([float(i) for i in l[1:]])
         else:
             plams[l[0]] = l[1]
+            
     #OutPutをインスタンス化のち、グラフのプロット
     oput = OutPut(plams)
     fig = plt.figure(figsize=(10, 7))
@@ -138,6 +138,7 @@ if __name__ == '__main__':
     ay = oput.twoDPlot(ay,"y",0)
     az = oput.twoDPlot(az,"z",0)
     a3d = oput.threeDPlot(a3d)
+
     #vectorの出力テストを行うためにテストデータの作成とプロット
     s_pos = PosLToDic([-50,-50,-50])
     e_pos = PosLToDic([50,50,50])
