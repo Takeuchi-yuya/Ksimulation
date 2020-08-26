@@ -18,18 +18,19 @@
  1.0
 ```
 ### 基本方針
- 入力（CAD、CLIどっちかもしくは両方？　両方の場合はmapはCAD、電磁場や粒子のパラメータをCLIで）
+ 入力 InPut.py
+ （CAD、CLIどっちかもしくは両方？　両方の場合はmapはCAD、電磁場や粒子のパラメータをCLIで）
 
  　　↓　　　
 
-演算処理
+演算処理 
 
 - 基本的に、クーロン力、ローレンツ力を考慮した運動方程式と、ベーテブロッホの式から減衰を考える。
 
 　　↓　
 
-出力
+出力 OutPut.py
 - matplotlibのグラフ出力を利用する。余裕があればアニメーションとかもやりたい！
--CADから3D描画したい [参照](https://resp-kke.azurewebsites.net/2020/02/24/programtipspython_plotly3d/)
+- CADから3D描画したい [参照](https://resp-kke.azurewebsites.net/2020/02/24/programtipspython_plotly3d/)
 
 ### 追記

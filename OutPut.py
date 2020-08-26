@@ -3,6 +3,7 @@ from matplotlib import pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 import csv
 
+import subtool as sb
 from CreatTestdata import SampleFunc as SF
 
 #とりあえず、二次元三次元アニメーションを外で選択できるようにclassで書いていく。
@@ -107,9 +108,6 @@ class OutPut():
         ax.quiver(horizontal_list,vertical_list,U_list,V_list,color='red',angles='xy',scale_units='xy', scale=6.5)
         return ax
 
-#vectorをlistからdicに変換する。
-def PosLToDic(pos):
-    return {"x":pos[0] , "y":pos[1] , "z":pos[2]}
 
 if __name__ == '__main__':
     print("test実行")
@@ -126,7 +124,7 @@ if __name__ == '__main__':
                 plams[l[0]] = np.array([float(i) for i in l[1:]])
         else:
             plams[l[0]] = l[1]
-            
+
     #OutPutをインスタンス化のち、グラフのプロット
     oput = OutPut(plams)
     fig = plt.figure(figsize=(10, 7))
@@ -140,9 +138,9 @@ if __name__ == '__main__':
     a3d = oput.threeDPlot(a3d)
 
     #vectorの出力テストを行うためにテストデータの作成とプロット
-    s_pos = PosLToDic([-50,-50,-50])
-    e_pos = PosLToDic([50,50,50])
-    vector = PosLToDic([5,5,5])
+    s_pos = sb.PosLToDic([-50,-50,-50])
+    e_pos = sb.PosLToDic([50,50,50])
+    vector = sb.PosLToDic([5,5,5])
     vf = SF(s_pos,e_pos,vector)
     ax = oput.vectorTwoDPlot(vf,ax,"x",0)
     ay = oput.vectorTwoDPlot(vf,ay,"y",0)
