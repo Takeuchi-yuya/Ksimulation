@@ -1,14 +1,20 @@
 import numpy as np
 import math
 
+#３Dプロットのためのコード。
+import matplotlib.pyplot as plt
+import seaborn as sns
+sns.set_style("darkgrid")
+from mpl_toolkits.mplot3d import Axes3D
+
 q = 1.6
 m = 0.06
-E = [1,0,0]
-B = [0,1,0]
+E = [0,0,1]
+B = [0,0,1]
 
 t_max = int(input("計算する時間を入力してください。[s]"))
 t_max = float(t_max)
-dt = 0.1
+dt = 0.01
 t_repetition = t_max/dt
 t_repetition = int(t_repetition)
 
@@ -24,6 +30,7 @@ v0 = [float(n) for n in v0]
 v = np.empty((0,3), float)
 v = np.append(v, np.array([v0]), axis=0)
 
+#以下ルンゲクッタ法。
 for i in range(t_repetition):
     v1 = v[i]
     u1 = np.cross(v1,B)
@@ -50,7 +57,31 @@ for i in range(t_repetition):
     x_tem = x[i] + dt*(l1 + 2*l2 + 2*l3 + l4)/6
     x = np.append(x, np.array([x_tem]), axis=0)
 
-print(x)
+
+X = np.array([x[i][0] for i in range(t_repetition +1)])
+Y = np.array([x[i][1] for i in range(t_repetition +1)])
+Z = np.array([x[i][2] for i in range(t_repetition +1)])
+
+print(X)
+print(Y)
+print(Z)
+
+#グラフの枠を作っていく
+fig = plt.figure()
+ax = Axes3D(fig)
+
+#軸にラベルを付けたいときは書く
+ax.set_xlabel("X")
+ax.set_ylabel("Y")
+ax.set_zlabel("Z")
+
+#.plotで描画
+#linestyle='None'にしないと初期値では線が引かれるが、3次元の散布図だと大抵ジャマになる
+#markerは無難に丸
+ax.plot(X,Y,Z,marker="o",linestyle='None')
+
+#最後に.show()を書いてグラフ表示
+plt.show()
 
 
 
