@@ -7,9 +7,12 @@ import seaborn as sns
 sns.set_style("darkgrid")
 from mpl_toolkits.mplot3d import Axes3D
 
+import csv
+from OutPut import OutPut
+
 q = 1.6
 m = 0.06
-E = [0,0,1]
+E = [0,0,10]
 B = [0,0,1]
 
 t_max = int(input("計算する時間を入力してください。[s]"))
@@ -57,34 +60,44 @@ for i in range(t_repetition):
     x_tem = x[i] + dt*(l1 + 2*l2 + 2*l3 + l4)/6
     x = np.append(x, np.array([x_tem]), axis=0)
 
+np.save('runge_posi',x)
 
+#2次元配列からそれぞれの座標を取り出す。
 X = np.array([x[i][0] for i in range(t_repetition +1)])
 Y = np.array([x[i][1] for i in range(t_repetition +1)])
 Z = np.array([x[i][2] for i in range(t_repetition +1)])
 
-print(X)
-print(Y)
-print(Z)
-
 #グラフの枠を作っていく
-fig = plt.figure()
-ax = Axes3D(fig)
+#fig = plt.figure()
+#ax = Axes3D(fig)
 
-#軸にラベルを付けたいときは書く
-ax.set_xlabel("X")
-ax.set_ylabel("Y")
-ax.set_zlabel("Z")
+#ax.set_xlabel("X")
+#ax.set_ylabel("Y")
+#ax.set_zlabel("Z")
 
-#.plotで描画
-#linestyle='None'にしないと初期値では線が引かれるが、3次元の散布図だと大抵ジャマになる
-#markerは無難に丸
-ax.plot(X,Y,Z,marker="o",linestyle='None')
+#ax.plot(X,Y,Z,marker="o",linestyle='None')
 
-#最後に.show()を書いてグラフ表示
+#plt.show()
+
+plams = {"title":1,"x":X,"y":Y,"z":Z}
+
+oput = OutPut(plams)
+fig = plt.figure(figsize=(10, 7))
+ax = plt.subplot2grid((2,2),(0,0))
+ay = plt.subplot2grid((2,2),(0,1))
+az = plt.subplot2grid((2,2),(1,0))
+a3d = plt.subplot2grid((2,2),(1,1),projection='3d')
+ax = oput.twoDPlot(ax,"x",0)
+ay = oput.twoDPlot(ay,"y",0)
+az = oput.twoDPlot(az,"z",0)
+a3d = oput.threeDPlot(a3d)
+
+#vectorの出力テストを行うためにテストデータの作成とプロット
+s_pos = sb.PosLToDic([-50,-50,-50])
+e_pos = sb.PosLToDic([50,50,50])
+vector = sb.PosLToDic([5,5,5])
+vf = SF(s_pos,e_pos,vector)
+ax = oput.vectorTwoDPlot(vf,ax,"x",0)
+ay = oput.vectorTwoDPlot(vf,ay,"y",0)
+az = oput.vectorTwoDPlot(vf,az,"z",0)
 plt.show()
-
-
-
-#def bethe(self,):
-
-#dE = 4*PI()*/
