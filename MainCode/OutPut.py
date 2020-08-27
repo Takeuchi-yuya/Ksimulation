@@ -16,6 +16,14 @@ class OutPut():
 
     #とりあえず、最初から三次元データが入力された状態で二次元に切り取って出力したい。
     #xy,yz,xzをそれぞれz,x,yで選択し値設定することで出力を試みる。
+    def figure(self):
+        return plt.figure(figsize = (10, 7))
+    def subplot2grid(self , Plt ,pos , Projection='2d'):
+        if Projection == '3d':
+            return Plt.subplot2grid((2,2),pos,projection='3d')
+        else:
+            return Plt.subplot2grid((2,2),pos)
+
     def twoDPlot(self,ax,losAxis,value):
         horizontal_list = np.array([])
         vertical_list = np.array([])
@@ -127,15 +135,15 @@ if __name__ == '__main__':
 
     #OutPutをインスタンス化のち、グラフのプロット
     oput = OutPut(plams)
-    fig = plt.figure(figsize=(10, 7))
-    ax = plt.subplot2grid((2,2),(0,0))
-    ay = plt.subplot2grid((2,2),(0,1))
-    az = plt.subplot2grid((2,2),(1,0))
-    a3d = plt.subplot2grid((2,2),(1,1),projection='3d')
-    ax = oput.twoDPlot(ax,"x",0)
-    ay = oput.twoDPlot(ay,"y",0)
-    az = oput.twoDPlot(az,"z",0)
-    a3d = oput.threeDPlot(a3d)
+    fig  = oput.figure()
+    ax   = oput.subplot2grid(plt , (0,0))
+    ay   = oput.subplot2grid(plt , (0,1))
+    az   = oput.subplot2grid(plt , (1,0))
+    a3d  = oput.subplot2grid(plt ,(1,1),'3d')
+    ax   = oput.twoDPlot(ax,"x",0)
+    ay   = oput.twoDPlot(ay,"y",0)
+    az   = oput.twoDPlot(az,"z",0)
+    a3d  = oput.threeDPlot(a3d)
 
     #vectorの出力テストを行うためにテストデータの作成とプロット
     s_pos = sb.PosLToDic([-50,-50,-50])
