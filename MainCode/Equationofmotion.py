@@ -79,7 +79,7 @@ Z = np.array([x[i][2] for i in range(t_repetition +1)])
 
 #plt.show()
 
-plams = {"title":1,"x":X,"y":Y,"z":Z}
+plams = {"title":"runge","x":X,"y":Y,"z":Z}
 
 oput = OutPut(plams)
 fig = plt.figure(figsize=(10, 7))
