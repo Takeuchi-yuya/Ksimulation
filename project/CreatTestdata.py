@@ -15,7 +15,7 @@ class SampleFunc():
         if flag:
             return self.vector
         else:
-            return False
+            return self.zero_vector
 
 
 if __name__ == '__main__':
