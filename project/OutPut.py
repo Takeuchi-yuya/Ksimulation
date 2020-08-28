@@ -22,9 +22,9 @@ class OutPut():
         ay = plt.subplot2grid((2,2),(0,1))
         az = plt.subplot2grid((2,2),(1,0))
         a3d = plt.subplot2grid((2,2),(1,1),projection='3d')
-        ax = oput.twoDPlot(ax,"x",0)
-        ay = oput.twoDPlot(ay,"y",0)
-        az = oput.twoDPlot(az,"z",0)
+        ax = oput.twoDPlot(ax,"x")
+        ay = oput.twoDPlot(ay,"y")
+        az = oput.twoDPlot(az,"z")
         a3d = oput.threeDPlot(a3d)
 
         #vectorの出力テストを行うためにテストデータの作成とプロット
@@ -32,36 +32,51 @@ class OutPut():
         e_pos = sb.PosLToDic([50,50,50])
         vector = sb.PosLToDic([5,5,5])
         vf = SF(s_pos,e_pos,vector)
-        ax = oput.vectorTwoDPlot(vf,ax,"x",0)
-        ay = oput.vectorTwoDPlot(vf,ay,"y",0)
-        az = oput.vectorTwoDPlot(vf,az,"z",0)
+        ax = oput.vectorTwoDPlot(vf,ax,"x")
+        ay = oput.vectorTwoDPlot(vf,ay,"y")
+        az = oput.vectorTwoDPlot(vf,az,"z")
         plt.show()
-    def twoDPlot(self,ax,losAxis,value):
+    def twoDPlot(self,ax,losAxis,value = ""):
         horizontal_list = np.array([])
         vertical_list = np.array([])
         if "y" ==losAxis:
             horizontal_name = "x"
             vertical_name = "z"
-            for tmp_x , check_y ,tmp_z in zip(self.x , self.y , self.z):
-                if check_y == value:
-                    horizontal_list = np.append(horizontal_list,float(tmp_x))
-                    vertical_list = np.append(vertical_list , float(tmp_z))
+            if value =="":
+                horizontal_list = np.array(self.x)
+                vertical_list = np.array(self.z)
+            else:
+                for tmp_x , check_y ,tmp_z in zip(self.x , self.y , self.z):
+                    if check_y == value:
+                        horizontal_list = np.append(horizontal_list,float(tmp_x))
+                        vertical_list = np.append(vertical_list , float(tmp_z))
         elif "z" ==losAxis:
             horizontal_name = "x"
             vertical_name = "y"
-            for tmp_x , tmp_y ,check_z in zip(self.x , self.y , self.z):
-                if check_z == value:
-                    horizontal_list = np.append(horizontal_list,float(tmp_x))
-                    vertical_list = np.append(vertical_list , float(tmp_y))
+            if value =="":
+                horizontal_list = np.array(self.x)
+                vertical_list = np.array(self.y)
+            else:
+                for tmp_x , tmp_y ,check_z in zip(self.x , self.y , self.z):
+                    if check_z == value:
+                        horizontal_list = np.append(horizontal_list,float(tmp_x))
+                        vertical_list = np.append(vertical_list , float(tmp_y))
         else:
             horizontal_name = "y"
             vertical_name = "z"
-            for check_x , tmp_y ,tmp_z in zip(self.x , self.y , self.z):
-                if check_x == value:
-                    horizontal_list = np.append(horizontal_list,float(tmp_y))
-                    vertical_list = np.append(vertical_list , float(tmp_z))
+            if value =="":
+                horizontal_list = np.array(self.y)
+                vertical_list = np.array(self.z)
+            else:
+                for check_x , tmp_y ,tmp_z in zip(self.x , self.y , self.z):
+                    if check_x == value:
+                        horizontal_list = np.append(horizontal_list,float(tmp_y))
+                        vertical_list = np.append(vertical_list , float(tmp_z))
         ax.scatter(horizontal_list,vertical_list)
-        ax.set_title(self.title + " 2DPlot(" + losAxis +" = "+ str(value)+")")
+        if value == "":
+            ax.set_title(self.title + " 2DPlot(" + horizontal_name + vertical_name +")")
+        else:
+            ax.set_title(self.title + " 2DPlot(" + losAxis +" = "+ str(value)+")")
         ax.set_xlabel(horizontal_name)
         ax.set_ylabel(vertical_name)
 
@@ -72,7 +87,7 @@ class OutPut():
         return ax
 
 
-    def vectorTwoDPlot(self,vf,ax,losAxis,value):
+    def vectorTwoDPlot(self,vf,ax,losAxis,value = 0):
         grid_count = 10
         if losAxis == "x":
             horizontal_list = np.array([])
