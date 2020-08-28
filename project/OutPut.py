@@ -35,7 +35,10 @@ class OutPut():
         ax = self.vectorTwoDPlot(vf,ax,"x")
         ay = self.vectorTwoDPlot(vf,ay,"y")
         az = self.vectorTwoDPlot(vf,az,"z")
+<<<<<<< HEAD
         plt.tight_layout()
+=======
+>>>>>>> 6d8cf110206b269e487456c11a9c5592b4e31865
         plt.show()
     def twoDPlot(self,ax,losAxis,value = ""):
         horizontal_list = np.array([])
