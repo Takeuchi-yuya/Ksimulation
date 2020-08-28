@@ -24,7 +24,7 @@
 
  　　↓　　　
 
-演算処理 
+演算処理
 
 - 基本的に、クーロン力、ローレンツ力を考慮した運動方程式と、ベーテブロッホの式から減衰を考える。
 
@@ -33,5 +33,12 @@
 出力 OutPut.py
 - matplotlibのグラフ出力を利用する。余裕があればアニメーションとかもやりたい！
 - CADから3D描画したい [参照](https://resp-kke.azurewebsites.net/2020/02/24/programtipspython_plotly3d/)
+### test系
+ testは、unittestを用いて行う
+
+```
+ cd ./tests
+ make test
+```
 
 ### 追記

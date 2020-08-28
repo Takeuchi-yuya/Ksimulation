@@ -19,8 +19,12 @@ class SampleFunc():
             return False
 
 #vectorをlistからdicに変換する。
-def PosLToDic(pos):
-    return {"x":pos[0] , "y":pos[1] , "z":pos[2]}
+def PosLToDic(pos , title = ""):
+    if title =="":
+        return {"x":pos[0] , "y":pos[1] , "z":pos[2]}
+    else:
+        return {"x":pos[0] , "y":pos[1] , "z":pos[2] , "title":title}
+
 
 
 def L2Nrom(pos1,pos2):
