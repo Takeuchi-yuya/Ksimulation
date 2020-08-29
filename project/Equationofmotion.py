@@ -6,12 +6,12 @@ from CreatTestdata import SampleFunc
 
 q = 1.6/10000000000000000000
 m = 9.11/10000000000000000000000000000000
-Efield = SampleFunc({"x":-50.0,"y":-50.0,"z":-50.0},{"x":50.0,"y":50.0,"z":50.0},{"x":0.0,"y":0.0,"z":100.0})
-Bfield = SampleFunc({"x":-50.0,"y":-50.0,"z":-50.0},{"x":50.0,"y":50.0,"z":50.0},{"x":0.0,"y":0.0,"z":100.0})
+Efield = SampleFunc({"x":-50.0,"y":-50.0,"z":-50.0},{"x":50.0,"y":50.0,"z":50.0},{"x":0.0,"y":0.0,"z":0.0000000000005})
+Bfield = SampleFunc({"x":-50.0,"y":-50.0,"z":-50.0},{"x":50.0,"y":50.0,"z":50.0},{"x":0.0,"y":0.0,"z":0.0000000000025})
 
 t_max = int(input("計算する時間を入力してください。[s]"))
 t_max = float(t_max)
-dt = 0.1
+dt = 0.01
 t_repetition = t_max/dt
 t_repetition = int(t_repetition)
 
@@ -35,8 +35,6 @@ for i in range(t_repetition):
     B = Bfield.VectorField(x[i])
     B = [B["x"],B["y"],B["z"]]
     #B = np.array(B)
-    print(E)
-    print(B)
 
     v1 = v[i]
     u1 = np.cross(v1,B)
