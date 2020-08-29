@@ -1,19 +1,13 @@
 import numpy as np
 import math
-
-#３Dプロットのためのコード。
-import matplotlib.pyplot as plt
-import seaborn as sns
-sns.set_style("darkgrid")
-from mpl_toolkits.mplot3d import Axes3D
-
-import csv
 from OutPut import OutPut
+from CreatTestdata import SampleFunc
 
-q = 1.6
-m = 0.06
-E = [0,0,10]
-B = [0,0,1]
+
+q = 1.6/10000000000000000000
+m = 9.11/10000000000000000000000000000000
+Efield = SampleFunc({"x":-50.0,"y":-50.0,"z":-50.0},{"x":50.0,"y":50.0,"z":50.0},{"x":0.0,"y":0.0,"z":0.0000000000005})
+Bfield = SampleFunc({"x":-50.0,"y":-50.0,"z":-50.0},{"x":50.0,"y":50.0,"z":50.0},{"x":0.0,"y":0.0,"z":0.0000000000025})
 
 t_max = int(input("計算する時間を入力してください。[s]"))
 t_max = float(t_max)
@@ -35,6 +29,13 @@ v = np.append(v, np.array([v0]), axis=0)
 
 #以下ルンゲクッタ法。
 for i in range(t_repetition):
+    E = Efield.VectorField(x[i])
+    E = [E["x"],E["y"],E["z"]]
+    #E = np.array(E)
+    B = Bfield.VectorField(x[i])
+    B = [B["x"],B["y"],B["z"]]
+    #B = np.array(B)
+
     v1 = v[i]
     u1 = np.cross(v1,B)
     k1 = q*(E + u1)/m
