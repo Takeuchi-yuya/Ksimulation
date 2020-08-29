@@ -1,3 +1,5 @@
+import subtool as sb
+
 #とりあえず、電荷を気にせず特定の座標範囲に並行電場を生成する関数を作ってみる。
 class SampleFunc():
     def __init__(self,s_pos,e_pos,vector):
@@ -6,6 +8,9 @@ class SampleFunc():
         self.vector = vector
         self.zero_vector = {"x" : 0,"y" : 0 , "z" : 0}
     def VectorField(self,position):
+        if not type(position) ==dict:
+            position = sb.PosLToDic(position)
+
         flag = True
         for ax in position:
             if self.s_pos[ax] <= position[ax] <= self.e_pos[ax]:
