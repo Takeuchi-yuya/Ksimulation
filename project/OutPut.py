@@ -8,12 +8,13 @@ from CreatTestdata import SampleFunc as SF
 
 #とりあえず、二次元三次元アニメーションを外で選択できるようにclassで書いていく。
 class OutPut():
-    def __init__(self,plams):
+    def __init__(self,plams,E = "",B = ""):
         self.title = plams["title"]
         self.x = plams["x"]
         self.y = plams["y"]
         self.z = plams["z"]
-
+        self.E = E
+        self.B = B
     #とりあえず、最初から三次元データが入力された状態で二次元に切り取って出力したい。
     #xy,yz,xzをそれぞれz,x,yで選択し値設定することで出力を試みる。
     def Show(self):
@@ -31,14 +32,15 @@ class OutPut():
         s_pos = sb.PosLToDic([-50,-50,-50])
         e_pos = sb.PosLToDic([50,50,50])
         vector = sb.PosLToDic([5,5,5])
-        vf = SF(s_pos,e_pos,vector)
-        ax = self.vectorTwoDPlot(vf,ax,"x")
-        ay = self.vectorTwoDPlot(vf,ay,"y")
-        az = self.vectorTwoDPlot(vf,az,"z")
-<<<<<<< HEAD
+        if self.E != "":
+            ax = self.vectorTwoDPlot(self.E,ax,"x",'E')
+            ay = self.vectorTwoDPlot(self.E,ay,"y",'E')
+            az = self.vectorTwoDPlot(self.E,az,"z",'E')
+        if self.B != "":
+            ax = self.vectorTwoDPlot(self.B ,ax,"x",'B')
+            ay = self.vectorTwoDPlot(self.B ,ay,"y",'B')
+            az = self.vectorTwoDPlot(self.B ,az,"z",'B')
         plt.tight_layout()
-=======
->>>>>>> 6d8cf110206b269e487456c11a9c5592b4e31865
         plt.show()
     def twoDPlot(self,ax,losAxis,value = ""):
         horizontal_list = np.array([])
@@ -91,7 +93,7 @@ class OutPut():
         return ax
 
 
-    def vectorTwoDPlot(self,vf,ax,losAxis,value = 0):
+    def vectorTwoDPlot(self,vf,ax,losAxis,type,value = 0):
         grid_count = 10
         if losAxis == "x":
             horizontal_list = np.array([])
@@ -144,7 +146,19 @@ class OutPut():
                             vertical_list = np.append(vertical_list,y)
                             U_list = np.append(U_list,vector["x"])
                             V_list = np.append(V_list,vector["y"])
-        ax.quiver(horizontal_list,vertical_list,U_list,V_list,color='red',angles='xy',scale_units='xy', scale=6.5)
+        if type == 'E':
+            #print("plot E")
+            print(U_list)
+            print(V_list)
+            ax.quiver(horizontal_list,vertical_list,U_list,V_list,color = 'red' ,angles='xy',scale_units='xy', scale=6.5)
+        elif type == 'B':
+            #print("plot B")
+            print(U_list)
+            print(V_list)
+            ax.quiver(horizontal_list,vertical_list,U_list,V_list,color = 'blue' ,angles='xy',scale_units='xy', scale=6.5)
+        else:
+            #print(type)
+            ax.quiver(horizontal_list,vertical_list,U_list,V_list,color = 'black' ,angles='xy',scale_units='xy', scale=6.5)
         return ax
 
 

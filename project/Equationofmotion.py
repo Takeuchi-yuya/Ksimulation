@@ -6,8 +6,10 @@ from CreatTestdata import SampleFunc
 
 q = 1.6/10000000000000000000
 m = 9.11/10000000000000000000000000000000
-Efield = SampleFunc({"x":-50.0,"y":-50.0,"z":-50.0},{"x":50.0,"y":50.0,"z":50.0},{"x":0.0,"y":0.0,"z":0.0000000000005})
-Bfield = SampleFunc({"x":-50.0,"y":-50.0,"z":-50.0},{"x":50.0,"y":50.0,"z":50.0},{"x":0.0,"y":0.0,"z":0.0000000000025})
+#Efield = SampleFunc({"x":-50.0,"y":-50.0,"z":-50.0},{"x":50.0,"y":50.0,"z":50.0},{"x":0.0,"y":0.0,"z":0.000000000005})
+#Bfield = SampleFunc({"x":-50.0,"y":-50.0,"z":-50.0},{"x":50.0,"y":50.0,"z":50.0},{"x":0.0,"y":0.0,"z":0.0000000000025})
+Efield = SampleFunc({"x":-50.0,"y":-50.0,"z":-50.0},{"x":50.0,"y":50.0,"z":50.0},{"x":0.0,"y":0.0,"z":5.0})
+Bfield = SampleFunc({"x":-50.0,"y":-50.0,"z":-50.0},{"x":50.0,"y":50.0,"z":50.0},{"x":0.0,"y":0.0,"z":25.0})
 
 t_max = int(input("計算する時間を入力してください。[s]"))
 t_max = float(t_max)
@@ -82,5 +84,5 @@ Z = np.array([x[i][2] for i in range(t_repetition +1)])
 
 plams = {"title":"runge","x":X,"y":Y,"z":Z}
 
-oput = OutPut(plams)
+oput = OutPut(plams,Efield,Bfield)
 oput.Show()
