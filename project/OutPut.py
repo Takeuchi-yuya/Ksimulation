@@ -2,10 +2,8 @@ import numpy as np
 from matplotlib import pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 import csv
-
-import subtool as sb
-from CreatTestdata import SampleFunc as SF
-
+from . import subtool as sb
+#from CreatTestdata import SampleFunc as SF
 #とりあえず、二次元三次元アニメーションを外で選択できるようにclassで書いていく。
 class OutPut():
     def __init__(self,plams,E = "",B = ""):

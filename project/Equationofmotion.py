@@ -4,28 +4,36 @@ from OutPut import OutPut
 from CreatTestdata import SampleFunc
 
 
-q = 1.6/10000000000000000000
-m = 9.11/10000000000000000000000000000000
-#Efield = SampleFunc({"x":-50.0,"y":-50.0,"z":-50.0},{"x":50.0,"y":50.0,"z":50.0},{"x":0.0,"y":0.0,"z":0.000000000005})
-#Bfield = SampleFunc({"x":-50.0,"y":-50.0,"z":-50.0},{"x":50.0,"y":50.0,"z":50.0},{"x":0.0,"y":0.0,"z":0.0000000000025})
-Efield = SampleFunc({"x":-50.0,"y":-50.0,"z":-50.0},{"x":50.0,"y":50.0,"z":50.0},{"x":0.0,"y":0.0,"z":5.0})
-Bfield = SampleFunc({"x":-50.0,"y":-50.0,"z":-50.0},{"x":50.0,"y":50.0,"z":50.0},{"x":0.0,"y":0.0,"z":25.0})
+kind = input("入射粒子を入力してください(e/p/other)")
+if kind == "e":
+    q = 1.6/10000000000000000000
+    m = 9.11/10000000000000000000000000000000
 
-t_max = int(input("計算する時間を入力してください。[s]"))
-t_max = float(t_max)
+elif kind == "p":
+    q = 1.6/10000000000000000000
+    m = 1.673/1000000000000000000000000000
+
+else:
+    val = int(input("価数を入力してください"))
+    q = val*1.6/10000000000000000000
+    mass = float(input("原子量を入力してください[g/mol]"))
+    Na = 6.02*100000000000000000000000
+    m = mass/(Na/1000)
+
+Efield = SampleFunc({"x":-50.0,"y":-50.0,"z":-50.0},{"x":50.0,"y":50.0,"z":50.0},{"x":0.0,"y":0.0,"z":0.0000000000005})
+Bfield = SampleFunc({"x":-50.0,"y":-50.0,"z":-50.0},{"x":50.0,"y":50.0,"z":50.0},{"x":0.0,"y":0.0,"z":0.0000000000025})
+
+t_max = float(input("計算する時間を入力してください。[s]"))
 dt = 0.01
 t_repetition = t_max/dt
 t_repetition = int(t_repetition)
 
 print("初期位置を入力してください。[m]")
-#int型で読み取ったものをfloat型にして、それぞれの2次配列の先頭に入れる。
-x0 = list(map(int, input().split()))
-x0 = [float(n) for n in x0]
+x0 = list(map(float, input().split()))
 x = np.empty((0,3), float)
 x = np.append(x, np.array([x0]), axis=0)
 print("初速度を入力してください。[m/s]")
-v0 = list(map(int, input().split()))
-v0 = [float(n) for n in v0]
+v0 = list(map(float, input().split()))
 v = np.empty((0,3), float)
 v = np.append(v, np.array([v0]), axis=0)
 
@@ -69,18 +77,6 @@ np.save('runge_posi',x)
 X = np.array([x[i][0] for i in range(t_repetition +1)])
 Y = np.array([x[i][1] for i in range(t_repetition +1)])
 Z = np.array([x[i][2] for i in range(t_repetition +1)])
-
-#グラフの枠を作っていく
-#fig = plt.figure()
-#ax = Axes3D(fig)
-
-#ax.set_xlabel("X")
-#ax.set_ylabel("Y")
-#ax.set_zlabel("Z")
-
-#ax.plot(X,Y,Z,marker="o",linestyle='None')
-
-#plt.show()
 
 plams = {"title":"runge","x":X,"y":Y,"z":Z}
 
