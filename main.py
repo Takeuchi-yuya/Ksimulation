@@ -20,3 +20,5 @@ plams = {"title":"runge","x":X,"y":Y,"z":Z}
 
 oput = pj.OutPut.OutPut(plams)
 oput.Show()
+
+#木内デスv
