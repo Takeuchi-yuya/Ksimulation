@@ -8,18 +8,18 @@ Na = 6.02*100000000000000000000000
 q = 3*1.6/10000000000000000000
 m = (26.98/Na)/1000
 
-Efield = SampleFunc({"x":-0.1,"y":-0.1,"z":-0.1},{"x":0.1,"y":0.1,"z":0.1},{"x":0.0,"y":0.0,"z":0.0})
-Bfield = SampleFunc({"x":-0.1,"y":-0.1,"z":-0.1},{"x":0.1,"y":0.1,"z":0.1},{"x":0.0,"y":0.05,"z":0.0})
+Efield = SampleFunc({"x":-0.1,"y":-0.1,"z":-0.1},{"x":0.1,"y":0.1,"z":0.1},{"x":149.896229,"y":0.0,"z":0.0})
+Bfield = SampleFunc({"x":-0.1,"y":-0.1,"z":-0.1},{"x":0.1,"y":0.1,"z":0.1},{"x":0.0,"y":0.005,"z":0.0})
 
-t_max = 0.000005
-dt = 0.0000000005
+t_max = 0.00001
+dt = 0.000000001
 t_repetition = t_max/dt
 t_repetition = int(t_repetition)
 
 x0 = [0.0, 0.0, -0.2]
 x = np.empty((0,3), float)
 x = np.append(x, np.array([x0]), axis=0)
-v0z = 0.001*299792458
+v0z = 0.0001*299792458
 v0 = [0, 0, v0z]
 v = np.empty((0,3), float)
 v = np.append(v, np.array([v0]), axis=0)
@@ -69,7 +69,7 @@ Y = 1000*Y
 Z = np.array([x[i][2] for i in range(t_repetition +1)])
 Z = 1000*Z
 
-plams = {"title":"Al_0.1%","x":X,"y":Y,"z":Z}
+plams = {"title":"Al_0.01%","x":X,"y":Y,"z":Z}
 
 oput = OutPut(plams)
 oput.Show()
