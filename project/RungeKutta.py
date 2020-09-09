@@ -1,5 +1,5 @@
 import numpy as np
-from CreatTestdata import SampleFunc
+from subtool import SampleFunc
 
 
 def runge(Efield, Bfield, q, m, t_repetition, x, v):
