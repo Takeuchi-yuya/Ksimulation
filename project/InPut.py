@@ -12,7 +12,7 @@ atm = {"H":1.00794,"He":4.00260,"Li":6.941,"Be":9.01218,"B":10.81,"C":12.01,"N":
 def inputCSV():
     while 1:
         print(atm)
-        with open('project/sam.csv') as f:
+        with open('project/data/sam.csv') as f:
             reader = csv.reader(f)
             list = [row for row in reader]
             for i in range(4):
