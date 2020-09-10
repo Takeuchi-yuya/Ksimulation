@@ -3,15 +3,15 @@ import math as ma
 import csv
 
 Na = 6.02*100000000000000000000000
-ion = {"H":1.00794,"He":4.00260,"Li":6.941,"Be":9.01218,"B":10.81,"C":12.01,"N":14.007,"O":16.00,"F":18.9984,"Ne":20.180,"Na":22.99,"Mg":24.305,"Al":26.98,"Si":28.1,"P":30.97,"S":32.1,"Cl":35.45,"Ar":39.95,"K":39.10,"Ca":40.08,"Sc":44.96,"Ti":47.88,"V":50.94}
+atm = {"H":1.00794,"He":4.00260,"Li":6.941,"Be":9.01218,"B":10.81,"C":12.01,"N":14.007,"O":16.00,"F":18.9984,"Ne":20.180,"Na":22.99,"Mg":24.305,"Al":26.98,"Si":28.1,"P":30.97,"S":32.1,"Cl":35.45,"Ar":39.95,"K":39.10,"Ca":40.08,"Sc":44.96,"Ti":47.88,"V":50.94}
 
 def inputCSV():
     while 1:
-        with open('sample.csv') as f:
+        with open('project/sam.csv') as f:
             reader = csv.reader(f)
             list = [row for row in reader]
 
-            kind = float(row[0][0])
+            kind = list[0][0]
             if kind == "e":
                 q = -1.6/10000000000000000000
                 m = 9.11/10000000000000000000000000000000
@@ -21,18 +21,21 @@ def inputCSV():
                 m = 1.673/1000000000000000000000000000
 
             else:
-                m = (ion[kind]/Na)/1000
-                val = float(row[0][1])
+                m = (atm[kind]/Na)/1000
+                val = float(list[0][1])
                 q = val*1.6/10000000000000000000
 
-            t_max = float(row[1][0])
+            t_max = float(list[1][0])
             dt = t_max/10000
             t_repetition = t_max/dt
+            t_repetition = int(t_repetition)
 
-            x0 = float(row[3])
+            x0 = list[2]
+            x0 = [float(a) for a in x0]
+            v0 = list[3]
+            v0 = [float(b) for b in v0]
             x = np.empty((0,3), float)
             x = np.append(x, np.array([x0]), axis=0)
-            v0 = float(row[4])
             v = np.empty((0,3), float)
             v = np.append(v, np.array([v0]), axis=0)
         return q, m, t_repetition, x, v
