@@ -2,12 +2,17 @@ import numpy as np
 import math
 from OutPut import OutPut
 from CreatTestdata import SampleFunc
-import Input
+import InPut as I
 
 Efield = SampleFunc({"x":-0.1,"y":-0.1,"z":-0.1},{"x":0.1,"y":0.1,"z":0.1},{"x":149.896229,"y":0.0,"z":0.0})
 Bfield = SampleFunc({"x":-0.1,"y":-0.1,"z":-0.1},{"x":0.1,"y":0.1,"z":0.1},{"x":0.0,"y":0.005,"z":0.0})
 
-q, m, t_repetition, x, v = input()
+#q, m, t_repetition, x, v = input()
+
+q, m = I.inputPar()
+t_repetition = I.inputTime()
+x = I.inputPos()
+v = I.inputVec()
 
 #以下ルンゲクッタ法。
 for i in range(t_repetition):
