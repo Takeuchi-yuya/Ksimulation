@@ -6,13 +6,15 @@ from . import subtool as sb
 #from CreatTestdata import SampleFunc as SF
 #とりあえず、二次元三次元アニメーションを外で選択できるようにclassで書いていく。
 class OutPut():
-    def __init__(self,plams,E = "",B = ""):
+    def __init__(self,plams,E = "",B = "",xLim = 1000,yLim = 1000):
         self.title = plams["title"]
         self.x = plams["x"]
         self.y = plams["y"]
         self.z = plams["z"]
         self.E = E
         self.B = B
+        self.xLim = xLim
+        self.yLim = yLim
     #とりあえず、最初から三次元データが入力された状態で二次元に切り取って出力したい。
     #xy,yz,xzをそれぞれz,x,yで選択し値設定することで出力を試みる。
     def Show(self):
@@ -40,6 +42,8 @@ class OutPut():
             az = self.vectorTwoDPlot(self.B ,az,"z",'B')
         plt.tight_layout()
         plt.show()
+
+
     def twoDPlot(self,ax,losAxis,value = ""):
         horizontal_list = np.array([])
         vertical_list = np.array([])
@@ -76,18 +80,21 @@ class OutPut():
                     if check_x == value:
                         horizontal_list = np.append(horizontal_list,float(tmp_y))
                         vertical_list = np.append(vertical_list , float(tmp_z))
-        ax.scatter(horizontal_list,vertical_list)
+        ax.scatter(horizontal_list,vertical_list , s = 0.05 , c = "k")
         if value == "":
             ax.set_title(self.title + " 2DPlot(" + horizontal_name + vertical_name +")")
         else:
             ax.set_title(self.title + " 2DPlot(" + losAxis +" = "+ str(value)+")")
         ax.set_xlabel(horizontal_name)
         ax.set_ylabel(vertical_name)
-
+        ax.set_xlim([-self.xLim,self.xLim])
+        ax.set_ylim([-self.yLim,self.yLim])
         return ax
     def threeDPlot(self,ax):
-        ax.scatter3D(self.x,self.y,self.z)
+        ax.scatter3D(self.x,self.y,self.z, s = 0.05 , c = "k")
         ax.set_title("Scatter Plot")
+        ax.set_xlim([-self.xLim,self.xLim])
+        ax.set_ylim([-self.yLim,self.yLim])
         return ax
 
 
@@ -98,10 +105,10 @@ class OutPut():
             vertical_list   = np.array([])
             U_list = np.array([])
             V_list = np.array([])
-            max_y = max(self.y)
-            min_y = min(self.y)
-            max_z = max(self.z)
-            min_z = min(self.z)
+            max_y = self.xLim
+            min_y = -self.xLim
+            max_z = self.yLim
+            min_z = -self.yLim
             for y in np.linspace(min_y,max_y,grid_count):
                 for z in np.linspace(min_z,max_z,grid_count):
                     vector = vf.VectorField({"x":float(value),"y":y,"z":z})
@@ -115,10 +122,10 @@ class OutPut():
             vertical_list   = np.array([])
             U_list = np.array([])
             V_list = np.array([])
-            max_x = max(self.x)
-            min_x = min(self.x)
-            max_z = max(self.z)
-            min_z = min(self.z)
+            max_x = self.xLim
+            min_x = -self.xLim
+            max_z = self.yLim
+            min_z = -self.yLim
             for x in np.linspace(min_x,max_x,grid_count):
                 for z in np.linspace(min_z,max_z,grid_count):
                     vector = vf.VectorField({"x":x , "y": value , "z":z})
@@ -128,35 +135,37 @@ class OutPut():
                         U_list = np.append(U_list,vector["x"])
                         V_list = np.append(V_list,vector["z"])
         else:
-                horizontal_list = np.array([])
-                vertical_list   = np.array([])
-                U_list = np.array([])
-                V_list = np.array([])
-                max_y = max(self.y)
-                min_y = min(self.y)
-                max_x = max(self.x)
-                min_x = min(self.x)
-                for y in np.linspace(min_y,max_y,grid_count):
-                    for x in np.linspace(min_x,max_x,grid_count):
-                        vector = vf.VectorField({"x":x , "y":y , "z":value})
-                        if vector:
-                            horizontal_list = np.append(horizontal_list,x)
-                            vertical_list = np.append(vertical_list,y)
-                            U_list = np.append(U_list,vector["x"])
-                            V_list = np.append(V_list,vector["y"])
+            horizontal_list = np.array([])
+            vertical_list   = np.array([])
+            U_list = np.array([])
+            V_list = np.array([])
+            max_x = self.xLim
+            min_x = -self.xLim
+            max_y = self.yLim
+            min_y = -self.yLim
+            for y in np.linspace(min_y,max_y,grid_count):
+                for x in np.linspace(min_x,max_x,grid_count):
+                    vector = vf.VectorField({"x":x , "y":y , "z":value})
+                    if vector:
+                        horizontal_list = np.append(horizontal_list,x)
+                        vertical_list = np.append(vertical_list,y)
+                        U_list = np.append(U_list,vector["x"])
+                        V_list = np.append(V_list,vector["y"])
+        #bairitu
+        magnification = 1000
         if type == 'E':
-            #print("plot E")
             print(U_list)
             print(V_list)
-            ax.quiver(horizontal_list,vertical_list,U_list,V_list,color = 'red' ,angles='xy',scale_units='xy', scale=6.5)
+            ax.quiver(horizontal_list,vertical_list,magnification*U_list,magnification*V_list,color = 'red' ,angles='xy',scale_units='xy', scale=6.5)
         elif type == 'B':
-            #print("plot B")
             print(U_list)
             print(V_list)
-            ax.quiver(horizontal_list,vertical_list,U_list,V_list,color = 'blue' ,angles='xy',scale_units='xy', scale=6.5)
+            ax.quiver(horizontal_list,vertical_list,magnification*magnification*magnification*magnification*U_list,magnification*magnification*magnification*V_list,color = 'blue' ,angles='xy',scale_units='xy', scale=6.5)
         else:
-            #print(type)
-            ax.quiver(horizontal_list,vertical_list,U_list,V_list,color = 'black' ,angles='xy',scale_units='xy', scale=6.5)
+
+            ax.quiver(horizontal_list,vertical_list,magnification*magnification*U_list,magnification*V_list,color = 'black' ,angles='xy',scale_units='xy', scale=6.5)
+        ax.set_xlim([-self.xLim,self.xLim])
+        ax.set_ylim([-self.yLim,self.yLim])
         return ax
 
 

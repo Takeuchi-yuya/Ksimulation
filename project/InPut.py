@@ -7,7 +7,7 @@ atm = {"H":1.00794,"He":4.00260,"Li":6.941,"Be":9.01218,"B":10.81,"C":12.01,"N":
 
 def inputCSV():
     while 1:
-        with open('project/sam.csv') as f:
+        with open('project/data/sam.csv') as f:
             reader = csv.reader(f)
             list = [row for row in reader]
 
@@ -26,7 +26,7 @@ def inputCSV():
                 q = val*1.6/10000000000000000000
 
             t_max = float(list[1][0])
-            dt = t_max/10000
+            dt = t_max/1000
             t_repetition = t_max/dt
             t_repetition = int(t_repetition)
 
