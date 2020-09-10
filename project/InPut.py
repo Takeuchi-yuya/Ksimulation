@@ -53,12 +53,8 @@ def inputPar():
             val = int(input("価数を入力してください"))
             q = val*1.6/10000000000000000000
             mass = float(input("原子量を入力してください[g/mol]"))
-<<<<<<< HEAD
-            Na = 6.02*100000000000000000000000
-            m = mass/(Na/1000)
-=======
             m = (mass/Na)/1000
->>>>>>> input
+
         else:
             print("please input \"e or p or other \" ")
             continue
