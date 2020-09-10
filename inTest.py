@@ -15,11 +15,11 @@ x, v = sub.runge(Efield, Bfield, q, m, x, v)
 #2次元配列からそれぞれの座標を取り出す。
 #グラフプロットをmm単位で。
 l = len(x)
-X = np.array([x[i][0] for i in range(l-1)])
+X = np.array([x[i][0] for i in range(l)])
 X = 1000*X
-Y = np.array([x[i][1] for i in range(l-1)])
+Y = np.array([x[i][1] for i in range(l)])
 Y = 1000*Y
-Z = np.array([x[i][2] for i in range(l-1)])
+Z = np.array([x[i][2] for i in range(l)])
 Z = 1000*Z
 
 plams = {"title":"Al_0.01%","x":X,"y":Y,"z":Z}
