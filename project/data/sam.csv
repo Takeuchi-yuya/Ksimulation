@@ -1,11 +1,4 @@
-<<<<<<< HEAD:project/sam.csv
 kind,Al
 val,3
 pos,0,0,-0.2
 vec,0,0,29979.2458
-=======
-Al,3
-0.00001
-0,0,-0.2
-0,0,29979.2458
->>>>>>> master:project/data/sam.csv
