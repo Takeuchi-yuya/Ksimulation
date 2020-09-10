@@ -1,5 +1,13 @@
 import numpy as np
 import math as ma
+import csv
+
+def input():
+    method = input("初期データの入力方法(csv/manual)")
+    with open('data/src/sample.csv') as f:
+    reader = csv.reader(f)
+    for row in reader:
+        print(row)
 
 def inputPar():
     kind = input("入射粒子を入力してください(e/p/other)")
