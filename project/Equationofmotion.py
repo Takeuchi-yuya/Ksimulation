@@ -84,5 +84,5 @@ Z = np.array([x[i][2] for i in range(t_repetition +1)])
 
 plams = {"title":"runge","x":X,"y":Y,"z":Z}
 
-oput = OutPut(plams)
+oput = OutPut(plams,Efield,Bfield)
 oput.Show()

@@ -4,6 +4,7 @@ from subtool import SampleFunc
 
 def runge(Efield, Bfield, q, m, t_repetition, x, v):
     for i in range(t_repetition):
+        print(type(x[i]))
         E = Efield.VectorField(x[i])
         E = [E["x"],E["y"],E["z"]]
         #E = np.array(E)
