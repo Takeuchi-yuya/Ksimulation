@@ -7,18 +7,19 @@ Efield = sub.SampleFunc({"x":-0.1,"y":-0.1,"z":-0.1},{"x":0.1,"y":0.1,"z":0.1},{
 Bfield = sub.SampleFunc({"x":-0.1,"y":-0.1,"z":-0.1},{"x":0.1,"y":0.1,"z":0.1},{"x":0.0,"y":0.005,"z":0.0})
 
 I = pj.InPut
-q, m, t_repetition, x, v = I.inputCSV()
+q, m, x, v = I.inputCSV()
 
 #以下ルンゲクッタ法。
-x, v = sub.runge(Efield, Bfield, q, m, t_repetition, x, v)
+x, v = sub.runge(Efield, Bfield, q, m, x, v)
 
 #2次元配列からそれぞれの座標を取り出す。
 #グラフプロットをmm単位で。
-X = np.array([x[i][0] for i in range(t_repetition +1)])
+l = len(x)
+X = np.array([x[i][0] for i in range(l-1)])
 X = 1000*X
-Y = np.array([x[i][1] for i in range(t_repetition +1)])
+Y = np.array([x[i][1] for i in range(l-1)])
 Y = 1000*Y
-Z = np.array([x[i][2] for i in range(t_repetition +1)])
+Z = np.array([x[i][2] for i in range(l-1)])
 Z = 1000*Z
 
 plams = {"title":"Al_0.01%","x":X,"y":Y,"z":Z}

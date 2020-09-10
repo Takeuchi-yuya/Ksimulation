@@ -25,11 +25,6 @@ def inputCSV():
                 val = float(list[0][1])
                 q = val*1.6/10000000000000000000
 
-            t_max = float(list[1][0])
-            dt = t_max/10000
-            t_repetition = t_max/dt
-            t_repetition = int(t_repetition)
-
             x0 = list[2]
             x0 = [float(a) for a in x0]
             v0 = list[3]
@@ -38,7 +33,7 @@ def inputCSV():
             x = np.append(x, np.array([x0]), axis=0)
             v = np.empty((0,3), float)
             v = np.append(v, np.array([v0]), axis=0)
-        return q, m, t_repetition, x, v
+        return q, m, x, v
 
 def inputPar():
     while 1:
