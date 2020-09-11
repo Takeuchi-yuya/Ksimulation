@@ -1,6 +1,6 @@
 import numpy as np
 #とりあえず小さめなdt（十分小さいかは不明)
-dt = 10**(-9)
+dt = 10**(-8)
 #とりあえず、電荷を気にせず特定の座標範囲に並行電場を生成する関数を作ってみる。
 class SampleFunc():
     def __init__(self,s_pos,e_pos,vector):
@@ -27,8 +27,16 @@ def PosLToDic(pos , title = ""):
     else:
         return {"x":pos[0] , "y":pos[1] , "z":pos[2] , "title":title}
 
-def runge(Efield, Bfield, q, m, x, v):
+def runge(Efield, Bfield, q, m, x0, v0):
     while 1:
+        x = np.empty((0,3), float)
+        x = np.append(x, np.array([x0]), axis=0)
+        v = np.empty((0,3), float)
+        v = np.append(v, np.array([v0]), axis=0)
+
+        #確認のため
+        print(x, v)
+
         dic_x = PosLToDic(x[-1])
         E = Efield.VectorField(dic_x)
         E = [E["x"],E["y"],E["z"]]
@@ -61,6 +69,8 @@ def runge(Efield, Bfield, q, m, x, v):
         v = np.append(v, np.array([v_tem]), axis=0)
         x_tem = x[-1] + dt*(l1 + 2*l2 + 2*l3 + l4)/6
         x = np.append(x, np.array([x_tem]), axis=0)
+
+        #print(x_tem)
 
         if x_tem[2] < -0.4:
             break
