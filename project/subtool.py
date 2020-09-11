@@ -35,15 +35,15 @@ def runge(Efield, Bfield, q, m, x0, v0):
         v = np.append(v, np.array([v0]), axis=0)
 
         #確認のため
-        print(x, v)
+        #print(x, v)
 
         dic_x = PosLToDic(x[-1])
         E = Efield.VectorField(dic_x)
         E = [E["x"],E["y"],E["z"]]
-        #E = np.array(E)
+
         B = Bfield.VectorField(dic_x)
         B = [B["x"],B["y"],B["z"]]
-        #B = np.array(B)
+        
 
         v1 = v[-1]
         u1 = np.cross(v1,B)
