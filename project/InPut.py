@@ -9,14 +9,17 @@ atm = {"H":1.00794,"He":4.00260,"Li":6.941,"Be":9.01218,"B":10.81,"C":12.01,"N":
     "Zn":65.39,"Ga":69.72,"Ge":72.61,"As":74.92,"Se":78.96,"Br":79.90,"Kr":83.80,"Rb":85.47,"Sr":87.62,"Y":88.91, \
     }
 
-def inputCSV():
+def inputCSV(data):
     while 1:
-        print(atm)
-        with open('project/data/sam.csv') as f:
+        with open(data) as f:
             reader = csv.reader(f)
             list = [row for row in reader]
-            for i in range(4):
-                del list[i][0]
+            for i in range(len(list)):
+                if len(list[i]) > 0:
+                    del list[i][0]
+
+            amount = list[0][0]
+            for num in range(amount):
 
             kind = list[0][0]
             if kind == "e":
