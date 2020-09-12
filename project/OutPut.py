@@ -6,7 +6,7 @@ from . import subtool as sb
 #from CreatTestdata import SampleFunc as SF
 #とりあえず、二次元三次元アニメーションを外で選択できるようにclassで書いていく。
 class OutPut():
-    def __init__(self,plams,E = "",B = "",horizontalLim = 1000,verticalLim = 1000):
+    def __init__(self,plams,E = "",B = "",horizontalLim = 400,verticalLim = 400):
         self.title = plams["title"]
         self.x = [plams["x"]]
         self.y = [plams["y"]]
