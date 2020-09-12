@@ -7,7 +7,11 @@ Efield = sub.SampleFunc({"x":-0.1,"y":-0.1,"z":-0.1},{"x":0.1,"y":0.1,"z":0.1},{
 Bfield = sub.SampleFunc({"x":-0.1,"y":-0.1,"z":-0.1},{"x":0.1,"y":0.1,"z":0.1},{"x":0.0,"y":0.005,"z":0.0})
 
 I = pj.InPut
+<<<<<<< HEAD
 num, q, m, x0, v0 = I.inputCSV('project/data/sam2.csv')
+=======
+q, m, x, v = I.inputCSV("sam")
+>>>>>>> master
 
 #R = np.empty((0, 0, 0), float)
 R = {}
@@ -35,5 +39,5 @@ R[str(0 + 1)] = r
 
 plams = {"title":"Al_0.01%","x":R["1"][0],"y":R["1"][1],"z":R["1"][2]}
 
-oput = pj.OutPut.OutPut(plams)
+oput = pj.OutPut.OutPut(plams,Efield,Bfield)
 oput.Show()
