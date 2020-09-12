@@ -7,7 +7,7 @@ Efield = sub.SampleFunc({"x":-0.1,"y":-0.1,"z":-0.1},{"x":0.1,"y":0.1,"z":0.1},{
 Bfield = sub.SampleFunc({"x":-0.1,"y":-0.1,"z":-0.1},{"x":0.1,"y":0.1,"z":0.1},{"x":0.0,"y":0.005,"z":0.0})
 
 I = pj.InPut
-q, m, x, v = I.inputCSV()
+q, m, x, v = I.inputCSV("sam")
 
 #以下ルンゲクッタ法。
 x, v = sub.runge(Efield, Bfield, q, m, x, v)

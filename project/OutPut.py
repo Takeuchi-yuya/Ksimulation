@@ -90,8 +90,8 @@ class OutPut():
             ax.set_title(self.title + " 2DPlot(" + horizontal_name + vertical_name +")")
         else:
             ax.set_title(self.title + " 2DPlot(" + losAxis +" = "+ str(value)+")")
-        ax.set_xlabel(horizontal_name)
-        ax.set_ylabel(vertical_name)
+        ax.set_xlabel(horizontal_name + "[mm]")
+        ax.set_ylabel(vertical_name + "[mm]")
         ax.set_xlim([-self.xLim,self.xLim])
         ax.set_ylim([-self.yLim,self.yLim])
         return ax
