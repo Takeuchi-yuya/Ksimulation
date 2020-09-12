@@ -4,6 +4,7 @@ dt = 10**(-9)
 #とりあえず、電荷を気にせず特定の座標範囲に並行電場を生成する関数を作ってみる。
 class SampleFunc():
     def __init__(self,s_pos,e_pos,vector):
+        print("setdata" + str(s_pos) + str(e_pos) + str(vector))
         self.s_pos = s_pos
         self.e_pos = e_pos
         self.vector = vector
@@ -12,6 +13,17 @@ class SampleFunc():
         flag = True
         for ax in position:
             if self.s_pos[ax] <= position[ax] <= self.e_pos[ax]:
+                 pass
+            else:
+                flag = False
+        if flag:
+            return self.vector
+        else:
+            return self.zero_vector
+    def OutPutVectorField(self,position):
+        flag = True
+        for ax in position:
+            if self.s_pos[ax]*1000 <= position[ax] <= self.e_pos[ax]*1000:
                  pass
             else:
                 flag = False

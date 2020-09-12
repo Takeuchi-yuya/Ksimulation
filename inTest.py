@@ -24,5 +24,5 @@ Z = 1000*Z
 
 plams = {"title":"Al_0.01%","x":X,"y":Y,"z":Z}
 
-oput = pj.OutPut.OutPut(plams)
+oput = pj.OutPut.OutPut(plams,Efield,Bfield)
 oput.Show()
