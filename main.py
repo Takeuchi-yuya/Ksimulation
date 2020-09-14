@@ -1,24 +1,34 @@
 import numpy as np
+import math
 import project as pj
-#project/InPutの関数を呼ぶときはIで省略します宣言
-I = pj.InPut
-q, m = I.inputPar()
-t_repetition = I.inputTime()
-x = I.inputPos()
-v = I.inputVec()
+
 sub = pj.subtool
-Efield = sub.SampleFunc({"x":-50.0,"y":-50.0,"z":-50.0},{"x":50.0,"y":50.0,"z":50.0},{"x":0.0,"y":0.0,"z":0.0000000000005})
-Bfield = sub.SampleFunc({"x":-50.0,"y":-50.0,"z":-50.0},{"x":50.0,"y":50.0,"z":50.0},{"x":0.0,"y":0.0,"z":0.0000000000025})
+Efield = sub.SampleFunc({"x":-0.1,"y":-0.1,"z":-0.1},{"x":0.1,"y":0.1,"z":0.1},{"x":0.0,"y":0.0,"z":0.0})
+Bfield = sub.SampleFunc({"x":-0.1,"y":-0.1,"z":-0.1},{"x":0.1,"y":0.1,"z":0.1},{"x":0.0,"y":0.005,"z":0.0})
 
-x, v = sub.runge(Efield, Bfield, q, m, t_repetition, x, v)
+I = pj.InPut
+num, q, m, x0, v0 = I.inputCSV("sam2")
 
-X = np.array([x[i][0] for i in range(t_repetition +1)])
-Y = np.array([x[i][1] for i in range(t_repetition +1)])
-Z = np.array([x[i][2] for i in range(t_repetition +1)])
+R = {}
 
-plams = {"title":"runge","x":X,"y":Y,"z":Z}
+for i in range(num):
 
-oput = pj.OutPut.OutPut(plams)
+    #以下ルンゲクッタ法。
+    x, v = sub.runge(Efield, Bfield, q[i], m[i], x0[i], v0[i])
+
+    l = len(x)
+
+    X = np.array([x[j][0] for j in range(l)])
+    X = 1000*X
+    Y = np.array([x[j][1] for j in range(l)])
+    Y = 1000*Y
+    Z = np.array([x[j][2] for j in range(l)])
+    Z = 1000*Z
+
+    r = np.array([X, Y, Z])
+    R[str(i + 1)] = r
+
+plams = {"title":"Al_0.01%","x":R["1"][0],"y":R["1"][1],"z":R["1"][2]}
+
+oput = pj.OutPut.OutPut(plams,Efield,Bfield)
 oput.Show()
-
-#木内デスv
