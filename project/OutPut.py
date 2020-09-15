@@ -136,12 +136,12 @@ class OutPut():
         #bairitu
         magnification = 10
         if type == 'E':
-            print(U_list)
-            print(V_list)
+            #print(U_list)
+            #print(V_list)
             ax.quiver(horizontal_list,vertical_list,magnification*U_list,magnification*V_list,color = 'red' ,angles='xy',scale_units='xy', scale=6.5)
         elif type == 'B':
-            print(U_list)
-            print(V_list)
+            #print(U_list)
+            #print(V_list)
             ax.quiver(horizontal_list,vertical_list,magnification*magnification*magnification*magnification*U_list,magnification*magnification*magnification*V_list,color = 'blue' ,angles='xy',scale_units='xy', scale=6.5)
         else:
 
