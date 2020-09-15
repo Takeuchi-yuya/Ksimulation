@@ -31,5 +31,5 @@
 　　↓　
 
 出力 OutPut.py
-- matplotlibのグラフ出力を利用する。余裕があればアニメーションとかもやりたい！
+- matplotlibのグラフ出力を利用する。
 - CADから3D描画したい [参照](https://resp-kke.azurewebsites.net/2020/02/24/programtipspython_plotly3d/)

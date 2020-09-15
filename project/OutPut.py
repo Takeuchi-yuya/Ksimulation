@@ -5,8 +5,9 @@ import csv
 from . import subtool as sb
 #from CreatTestdata import SampleFunc as SF
 #とりあえず、二次元三次元アニメーションを外で選択できるようにclassで書いていく。
+
 class OutPut():
-    def __init__(self,plams,E = "",B = "",horizontalLim = 400,verticalLim = 400):
+    def __init__(self,plams,E = "",B = "",horizontalLim = 4000,verticalLim = 4000):
         self.title = [plams["title"]]
         self.x = [plams["x"]]
         self.y = [plams["y"]]
@@ -23,6 +24,28 @@ class OutPut():
         self.y.append(plams["y"])
         self.z.append(plams["z"])
 
+    def TimePlot(self , axis):
+        starttime = 0
+        dt = sb.dt
+        for x,y,z,title in zip(self.x,self.y,self.z,self.title):
+            endtime = starttime + len(x)*dt
+            timestamp = np.arange(starttime , endtime , dt)
+            if axis =="x":
+                plt.plot(timestamp,x)
+                plt.ylabel("x[mm]")
+            elif axis =="y":
+                plt.plot(timestamp,y)
+                plt.ylabel("y[mm]")
+
+            else:
+                plt.plot(timestamp,z)
+                plt.ylabel("z[mm]")
+            plt.xlabel("timestamp[div/" +str(dt) + "]")
+            plt.title(title)
+            plt.show()
+
+
+
     def Show(self):
         fig = plt.figure(figsize=(10, 7))
         ax = plt.subplot2grid((2,2),(0,0))
@@ -34,10 +57,7 @@ class OutPut():
         az = self.twoDPlot(az,"z")
         a3d = self.threeDPlot(a3d)
 
-        #vectorの出力テストを行うためにテストデータの作成とプロット
-        s_pos = sb.PosLToDic([-50,-50,-50])
-        e_pos = sb.PosLToDic([50,50,50])
-        vector = sb.PosLToDic([5,5,5])
+
         if self.E != "":
             ax = self.vectorTwoDPlot(self.E,ax,"x",'E')
             ay = self.vectorTwoDPlot(self.E,ay,"y",'E')
@@ -87,7 +107,7 @@ class OutPut():
                         if check_x == value:
                             horizontal_list = np.append(horizontal_list,float(tmp_y))
                             vertical_list = np.append(vertical_list , float(tmp_z))
-            ax.scatter(horizontal_list,vertical_list , s = 0.05 , label = title)
+            ax.plot(horizontal_list,vertical_list , label = title)
         if value == "":
             ax.set_title(" 2DPlot(" + horizontal_name + vertical_name +")")
         else:
@@ -98,9 +118,13 @@ class OutPut():
         ax.set_xlim([-self.horizontalLim,self.horizontalLim])
         ax.set_ylim([-self.verticalLim,self.verticalLim])
         return ax
+
     def threeDPlot(self,ax):
         for x,y,z in zip(self.x,self.y,self.z):
             ax.scatter3D(x,y,z, s = 0.05)
+        ax.set_xlabel("X-axis")
+        ax.set_ylabel("Y-axis")
+        ax.set_zlabel("Z-axis")
         ax.set_title("Scatter Plot")
         ax.set_xlim([-self.horizontalLim,self.horizontalLim])
         ax.set_ylim([-self.verticalLim,self.verticalLim])
@@ -152,24 +176,3 @@ class OutPut():
         ax.set_xlim([-self.horizontalLim,self.horizontalLim])
         ax.set_ylim([-self.verticalLim,self.verticalLim])
         return ax
-
-
-if __name__ == '__main__':
-    print("test実行")
-    with open('data/sample.csv') as f:
-         reader = csv.reader(f)
-         list = [row for row in reader]
-    #dict型に変換
-    plams = {}
-    for l in list:
-        if l[0] == "x" or l[0] == "y" or l[0] == "z":
-            if l[0] in plams:
-                plams[l[0]] = np.append(plams[l[0]],np.array([float(i) for i in l[1:]]))
-            else:
-                plams[l[0]] = np.array([float(i) for i in l[1:]])
-        else:
-            plams[l[0]] = l[1]
-
-    #OutPutをインスタンス化のち、グラフのプロット
-    oput = OutPut(plams)
-    oput.Show()
