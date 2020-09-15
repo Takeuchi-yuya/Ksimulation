@@ -39,12 +39,21 @@ def PosLToDic(pos , title = ""):
     else:
         return {"x":pos[0] , "y":pos[1] , "z":pos[2] , "title":title}
 
+def Force(t, x, v, E, B, q, m):
+    u = np.cross(v, B)
+    f = q*(E + u)/m
+    return f
+
+
 def runge(Efield, Bfield, q, m, x0, v0):
     x = np.empty((0,3), float)
     x = np.append(x, np.array([x0]), axis=0)
     v = np.empty((0,3), float)
     v = np.append(v, np.array([v0]), axis=0)
+    i = 0
+    limit = 10000
     while 1:
+        t = i*dt
         dic_x = PosLToDic(x[-1])
         E = Efield.VectorField(dic_x)
         E = [E["x"],E["y"],E["z"]]
@@ -52,37 +61,29 @@ def runge(Efield, Bfield, q, m, x0, v0):
         B = Bfield.VectorField(dic_x)
         B = [B["x"],B["y"],B["z"]]
 
+        k1_x = v[i]
+        k1_v = Force(t, x[i], v[i], E, B, q, m)
+        k2_x = v[i] + k1_v*dt/2
+        k2_v = Force(t + dt/2, x[i] + k1_x*dt/2, v[i] + k1_v*dt/2, E, B, q, m)
+        k3_x = v[i] + k2_v*dt/2
+        k3_v = Force(t + dt/2, x[i] + k2_x*dt/2, v[i] + k2_v*dt/2, E, B, q, m)
+        k4_x = v[i] + k3_v*dt
+        k4_v = Force(t + dt, x[i] + k3_x*dt, v[i] + k3_v*dt, E, B, q, m)
 
-        v1 = v[-1]
-        u1 = np.cross(v1,B)
-        k1 = q*(E + u1)/m
-        l1 = v[-1]
-
-        v2 = v1 + k1*dt/2
-        u2 = np.cross(v2,B)
-        k2 = q*(E + u2)/m
-        l2 = v[-1] + l1/2
-
-        v3 = v1 + k2*dt/2
-        u3 = np.cross(v3,B)
-        k3 = q*(E + u3)/m
-        l3 = v[-1] + l2/2
-
-        v4 = v1 + k3*dt
-        u4 = np.cross(v4,B)
-        k4 = q*(E + u4)/m
-        l4 = v[-1] + l3
-
-        v_tem = v[-1] + dt*(k1 + 2*k2 + 2*k3 + k4)/6
+        v_tem = v[i] + dt*(k1_v + 2*k2_v + 2*k3_v + k4_v)/6
         v = np.append(v, np.array([v_tem]), axis=0)
-        x_tem = x[-1] + dt*(l1 + 2*l2 + 2*l3 + l4)/6
+        x_tem = x[i] + dt*(k1_x + 2*k2_x + 2*k3_x + k4_x)/6
         x = np.append(x, np.array([x_tem]), axis=0)
 
         #print(x_tem)
 
+        i = i + 1
+
         if x_tem[2] < -0.4:
             break
         elif x_tem[2] > 0.4:
+            break
+        elif i > limit:
             break
 
     np.save('runge_posi',x)
