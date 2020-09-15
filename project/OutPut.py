@@ -7,7 +7,7 @@ from . import subtool as sb
 #とりあえず、二次元三次元アニメーションを外で選択できるようにclassで書いていく。
 class OutPut():
     def __init__(self,plams,E = "",B = "",horizontalLim = 400,verticalLim = 400):
-        self.title = plams["title"]
+        self.title = [plams["title"]]
         self.x = [plams["x"]]
         self.y = [plams["y"]]
         self.z = [plams["z"]]
@@ -17,10 +17,12 @@ class OutPut():
         self.verticalLim = verticalLim
     #とりあえず、最初から三次元データが入力された状態で二次元に切り取って出力したい。
     #xy,yz,xzをそれぞれz,x,yで選択し値設定することで出力を試みる。
-    def AddPlams(plams):
-        self.x.apped(plams["x"])
-        self.y.apped(plams["y"])
-        self.z.apped(plams["z"])
+    def AddPlams(self , plams):
+        self.title.append(plams["title"])
+        self.x.append(plams["x"])
+        self.y.append(plams["y"])
+        self.z.append(plams["z"])
+
     def Show(self):
         fig = plt.figure(figsize=(10, 7))
         ax = plt.subplot2grid((2,2),(0,0))
@@ -49,7 +51,7 @@ class OutPut():
 
 
     def twoDPlot(self,ax,losAxis,value = ""):
-        for x,y,z in zip(self.x,self.y,self.z):
+        for x,y,z,title in zip(self.x,self.y,self.z,self.title):
             horizontal_list = np.array([])
             vertical_list = np.array([])
             if "y" ==losAxis:
@@ -85,11 +87,12 @@ class OutPut():
                         if check_x == value:
                             horizontal_list = np.append(horizontal_list,float(tmp_y))
                             vertical_list = np.append(vertical_list , float(tmp_z))
-            ax.scatter(horizontal_list,vertical_list , s = 0.05)
+            ax.scatter(horizontal_list,vertical_list , s = 0.05 , label = title)
         if value == "":
-            ax.set_title(self.title + " 2DPlot(" + horizontal_name + vertical_name +")")
+            ax.set_title(" 2DPlot(" + horizontal_name + vertical_name +")")
         else:
-            ax.set_title(self.title + " 2DPlot(" + losAxis +" = "+ str(value)+")")
+            ax.set_title(" 2DPlot(" + losAxis +" = "+ str(value)+")")
+        ax.legend()
         ax.set_xlabel(horizontal_name + "[mm]")
         ax.set_ylabel(vertical_name + "[mm]")
         ax.set_xlim([-self.horizontalLim,self.horizontalLim])
@@ -136,12 +139,12 @@ class OutPut():
         #bairitu
         magnification = 10
         if type == 'E':
-            print(U_list)
-            print(V_list)
+            #print(U_list)
+            #print(V_list)
             ax.quiver(horizontal_list,vertical_list,magnification*U_list,magnification*V_list,color = 'red' ,angles='xy',scale_units='xy', scale=6.5)
         elif type == 'B':
-            print(U_list)
-            print(V_list)
+            #print(U_list)
+            #print(V_list)
             ax.quiver(horizontal_list,vertical_list,magnification*magnification*magnification*magnification*U_list,magnification*magnification*magnification*V_list,color = 'blue' ,angles='xy',scale_units='xy', scale=6.5)
         else:
 

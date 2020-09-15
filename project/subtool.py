@@ -78,7 +78,7 @@ def runge(Efield, Bfield, q, m, x0, v0):
         x_tem = x[-1] + dt*(l1 + 2*l2 + 2*l3 + l4)/6
         x = np.append(x, np.array([x_tem]), axis=0)
 
-        print(x_tem)
+        #print(x_tem)
 
         if x_tem[2] < -0.4:
             break
