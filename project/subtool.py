@@ -1,5 +1,6 @@
 import numpy as np
 #とりあえず小さめなdt（十分小さいかは不明)
+#Eの確認は10**(-8)、Bの確認は10**(-6)
 dt = 10**(-8)
 #とりあえず、電荷を気にせず特定の座標範囲に並行電場を生成する関数を作ってみる。
 class SampleFunc():
@@ -51,7 +52,7 @@ def runge(Efield, Bfield, q, m, x0, v0):
     v = np.empty((0,3), float)
     v = np.append(v, np.array([v0]), axis=0)
     i = 0
-    limit = 10000
+    limit = 20063
     while 1:
         t = i*dt
         dic_x = PosLToDic(x[-1])
@@ -75,9 +76,10 @@ def runge(Efield, Bfield, q, m, x0, v0):
         x_tem = x[i] + dt*(k1_x + 2*k2_x + 2*k3_x + k4_x)/6
         x = np.append(x, np.array([x_tem]), axis=0)
 
-        #print(x_tem)
-
         i = i + 1
+
+        if i%1000 == 0:
+            print(i, "回目のループです")
 
         if x_tem[2] < -0.4:
             break
