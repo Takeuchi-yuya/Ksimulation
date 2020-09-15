@@ -5,17 +5,18 @@ import project as pj
 sub = pj.subtool
 Efield = sub.SampleFunc({"x":-0.1,"y":-0.1,"z":-0.1},{"x":0.1,"y":0.1,"z":0.1},{"x":0.0,"y":0.0,"z":0.0})
 Bfield = sub.SampleFunc({"x":-0.1,"y":-0.1,"z":-0.1},{"x":0.1,"y":0.1,"z":0.1},{"x":0.0,"y":0.005,"z":0.0})
-
+print("input start")
 I = pj.InPut
-num, q, m, x0, v0 = I.inputCSV("sam2")
-
-R = {}
+num, q, m, x0, v0 , kind = I.inputCSV("sam2")
+print("input end")
+R = []
 
 for i in range(num):
 
     #以下ルンゲクッタ法。
+    print("runge start")
     x, v = sub.runge(Efield, Bfield, q[i], m[i], x0[i], v0[i])
-
+    print("runge end")
     l = len(x)
 
     X = np.array([x[j][0] for j in range(l)])
@@ -26,9 +27,14 @@ for i in range(num):
     Z = 1000*Z
 
     r = np.array([X, Y, Z])
-    R[str(i + 1)] = r
+    R.append(r)
+    plams = {"title":kind[i],"x":R[i][0],"y":R[i][1],"z":R[i][2]}
+    print("output start")
+    if i == 0:
+        oput = pj.OutPut.OutPut(plams,Efield,Bfield)
+    else:
+        oput.AddPlams(plams)
 
-plams = {"title":"Al_0.01%","x":R["1"][0],"y":R["1"][1],"z":R["1"][2]}
 
-oput = pj.OutPut.OutPut(plams,Efield,Bfield)
 oput.Show()
+print("output end")

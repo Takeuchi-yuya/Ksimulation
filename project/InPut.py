@@ -61,7 +61,7 @@ def inputCSV(name):
             else:
                 m = np.append(m, (atm[kind[i]]/Na)/1000)
                 q = np.append(q, val[i]*q_e)
-    return num, q, m, x0, v0
+    return num, q, m, x0, v0,kind
 
 def inputManual():
     q, m = inputPar()
