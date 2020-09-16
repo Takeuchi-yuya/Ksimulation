@@ -33,5 +33,5 @@ dt = 10**(-8)
 print("設定した座標に到達するまでにかかった時間は、", (l-1) * dt, "[s]です。")
 print("Excelで解析的に計算した結果は、1.223e-05[s]です")
 
-oput = pj.OutPut.OutPut(plams,Efield,Bfield)
+oput = pj.OutPut.OutPut(plams)
 oput.Show()
