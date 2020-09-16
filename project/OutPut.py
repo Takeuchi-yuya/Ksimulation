@@ -7,7 +7,7 @@ from . import subtool as sb
 #とりあえず、二次元三次元アニメーションを外で選択できるようにclassで書いていく。
 
 class OutPut():
-    def __init__(self,plams,E = "",B = "",horizontalLim = 4000,verticalLim = 4000):
+    def __init__(self,plams,E = "",B = "",horizontalLim = 4000,verticalLim = 4000,timestamp = ""):
         self.title = [plams["title"]]
         self.x = [plams["x"]]
         self.y = [plams["y"]]
@@ -16,21 +16,27 @@ class OutPut():
         self.B = B
         self.horizontalLim = horizontalLim
         self.verticalLim = verticalLim
+        starttime = 0
+        endtime = starttime + len(self.x)*sb.dt
+        if timestamp == "":
+            timestamp = np.arange(starttime , endtime , sb.dt)
+        self.timestamp = [timestamp]
     #とりあえず、最初から三次元データが入力された状態で二次元に切り取って出力したい。
     #xy,yz,xzをそれぞれz,x,yで選択し値設定することで出力を試みる。
-    def AddPlams(self , plams):
+    def AddPlams(self , plams ,timestamp = ""):
         self.title.append(plams["title"])
         self.x.append(plams["x"])
         self.y.append(plams["y"])
         self.z.append(plams["z"])
-
-    def TimePlot(self , axis , timestamp = "" , plams = ""):
+        starttime = 0
+        endtime = starttime + len(self.x)*sb.dt
+        if timestamp == "":
+            timestamp = np.arange(starttime , endtime , sb.dt)
+        self.timestamp.append(timestamp)
+    def TimePlot(self , axis):
         starttime = 0
         dt = sb.dt
-        for x,y,z,title in zip(self.x,self.y,self.z,self.title):
-            endtime = starttime + len(x)*dt
-            if timestamp == "":
-                timestamp = np.arange(starttime , endtime , dt)
+        for x,y,z,title,timestamp in zip(self.x,self.y,self.z,self.title,self.timestamp):
             if axis =="x":
                 plt.plot(timestamp,x)
                 plt.ylabel("x[mm]")

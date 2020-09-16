@@ -106,7 +106,7 @@ def NewRunge(Efield, Bfield, q, m, pos0, vec0):
         B = Bfield.VectorField(dic_x)
         #力の強いところで細かく刻む
         if E == {"x" : 0,"y" : 0 , "z" : 0} and B == {"x" : 0,"y" : 0 , "z" : 0}:
-            tmp_dt = dt *10
+            tmp_dt = dt *100
         else:
             tmp_dt = dt
         t = t + tmp_dt

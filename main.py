@@ -33,11 +33,11 @@ for i in range(num):
     plams = {"title":number[i] + ":" +  kind[i],"x":R[i][0],"y":R[i][1],"z":R[i][2]}
     print("output start")
     if i == 0:
-        oput = pj.OutPut.OutPut(plams,Efield,Bfield,400,400)
-        oput.TimePlot("z",timestamp)
+        oput = pj.OutPut.OutPut(plams,Efield,Bfield,400,400,timestamp)
     else:
-        oput.AddPlams(plams)
-        oput.TimePlot("z", timestamp,plams)
+        oput.AddPlams(plams,timestamp)
+
+oput.TimePlot("x")
 
 
 
