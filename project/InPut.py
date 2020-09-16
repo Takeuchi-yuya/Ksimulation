@@ -5,6 +5,7 @@ import csv
 Na = 6.02*100000000000000000000000
 q_e = 1.6/10000000000000000000
 
+#原子量のディクショナリ
 atm = {"H":1.00794,"He":4.00260,"Li":6.941,"Be":9.01218,"B":10.81,"C":12.01,"N":14.007,"O":16.00,"F":18.9984, \
     "Ne":20.180,"Na":22.99,"Mg":24.305,"Al":26.98,"Si":28.1,"P":30.97,"S":32.1,"Cl":35.45,"Ar":39.95,"K":39.10, \
     "Ca":40.08,"Sc":44.96,"Ti":47.88,"V":50.94,"Cr":52.00,"Mn":54.94,"Fe":55.85,"Co":58.93,"Ni":58.69,"Cu":63.55, \
@@ -23,14 +24,22 @@ def inputCSV(name):
                 del list[i][0]
 
         #使う変数を初期化
+        #ラベル
         number = np.empty(0)
+        #粒子の種類
         kind = np.empty(0)
+        #価数
         val = np.empty(0)
+        #初期位置
         x0 = np.empty((0,3), float)
+        #初速度
         v0 = np.empty((0,3), float)
+
+        #この後に計算する電荷と質量
         q = np.empty(0)
         m = np.empty(0)
 
+        #粒子の個数
         num = int(list[0][0])
         for i in range(num):
             number0 = int(list[6*i + 2][0])
@@ -51,12 +60,12 @@ def inputCSV(name):
             v0 = np.append(v0, np.array([vec0]), axis=0)
 
             if kind[i] == "e":
-                q = q.append(-q_e)
-                m = m.append(9.11/10000000000000000000000000000000)
+                q = np.append(q, -q_e)
+                m = np.append(m, 9.11/10000000000000000000000000000000)
 
             elif kind[i] == "p":
-                q = q.append(q_e)
-                m = m.append(1.673/1000000000000000000000000000)
+                q = np.append(q, q_e)
+                m = np.append(m, 1.673/1000000000000000000000000000)
 
             else:
                 m = np.append(m, (atm[kind[i]]/Na)/1000)
