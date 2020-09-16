@@ -7,7 +7,7 @@ Efield = sub.SampleFunc({"x":-1000,"y":-1000,"z":-1000},{"x":1000,"y":1000,"z":1
 Bfield = sub.SampleFunc({"x":-1000,"y":-1000,"z":-1000},{"x":1000,"y":1000,"z":1000},{"x":0.0,"y":0.0,"z":0.005})
 
 I = pj.InPut
-num, q, m, pos0, vec0, kind = I.inputCSV("OutTestSamE")
+num, q, m, pos0, vec0, kind, number = I.inputCSV("OutTestSamB")
 
 R = {}
 
@@ -54,5 +54,5 @@ print("分散は、", error_ave, "です")
 
 print("Excelで解析的に求めた半径は186.738648947951[mm]で、その差は", radius_ave-186.738648947951, "[mm]です")
 
-oput = pj.OutPut.OutPut(plams,Efield,Bfield)
+oput = pj.OutPut.OutPut(plams,Efield,Bfield,400,400)
 oput.Show()
