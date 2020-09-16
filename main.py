@@ -15,7 +15,8 @@ for i in range(num):
 
     #以下ルンゲクッタ法。
     print("runge start")
-    pos, vec = sub.runge(Efield, Bfield, q[i], m[i], pos0[i], vec0[i])
+    pos, vec ,timestamp= sub.NewRunge(Efield, Bfield, q[i], m[i], pos0[i], vec0[i])
+    #pos, vec = sub.runge(Efield, Bfield, q[i], m[i], pos0[i], vec0[i])
     print("runge end")
     l = len(pos)
 
@@ -25,15 +26,19 @@ for i in range(num):
     Y = 1000*Y
     Z = np.array([pos[j][2] for j in range(l)])
     Z = 1000*Z
-
+    print(len(Z))
+    print(len(timestamp))
     r = np.array([X, Y, Z])
     R.append(r)
     plams = {"title":number[i] + ":" +  kind[i],"x":R[i][0],"y":R[i][1],"z":R[i][2]}
     print("output start")
     if i == 0:
         oput = pj.OutPut.OutPut(plams,Efield,Bfield,400,400)
+        oput.TimePlot("z",timestamp)
     else:
         oput.AddPlams(plams)
+        oput.TimePlot("z", timestamp,plams)
+
 
 
 oput.Show()

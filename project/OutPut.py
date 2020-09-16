@@ -24,12 +24,13 @@ class OutPut():
         self.y.append(plams["y"])
         self.z.append(plams["z"])
 
-    def TimePlot(self , axis):
+    def TimePlot(self , axis , timestamp = "" , plams = ""):
         starttime = 0
         dt = sb.dt
         for x,y,z,title in zip(self.x,self.y,self.z,self.title):
             endtime = starttime + len(x)*dt
-            timestamp = np.arange(starttime , endtime , dt)
+            if timestamp == "":
+                timestamp = np.arange(starttime , endtime , dt)
             if axis =="x":
                 plt.plot(timestamp,x)
                 plt.ylabel("x[mm]")
