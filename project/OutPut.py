@@ -7,7 +7,7 @@ from . import subtool as sb
 #とりあえず、二次元三次元アニメーションを外で選択できるようにclassで書いていく。
 
 class OutPut():
-    def __init__(self,plams,E = "",B = "",horizontalLim = 4000,verticalLim = 4000):
+    def __init__(self,plams,E = "",B = "",horizontalLim = 4000,verticalLim = 4000,timestamp = ""):
         self.title = [plams["title"]]
         self.x = [plams["x"]]
         self.y = [plams["y"]]
@@ -16,20 +16,27 @@ class OutPut():
         self.B = B
         self.horizontalLim = horizontalLim
         self.verticalLim = verticalLim
+        starttime = 0
+        endtime = starttime + len(self.x)*sb.dt
+        if timestamp == "":
+            timestamp = np.arange(starttime , endtime , sb.dt)
+        self.timestamp = [timestamp]
     #とりあえず、最初から三次元データが入力された状態で二次元に切り取って出力したい。
     #xy,yz,xzをそれぞれz,x,yで選択し値設定することで出力を試みる。
-    def AddPlams(self , plams):
+    def AddPlams(self , plams ,timestamp = ""):
         self.title.append(plams["title"])
         self.x.append(plams["x"])
         self.y.append(plams["y"])
         self.z.append(plams["z"])
-
+        starttime = 0
+        endtime = starttime + len(self.x)*sb.dt
+        if timestamp == "":
+            timestamp = np.arange(starttime , endtime , sb.dt)
+        self.timestamp.append(timestamp)
     def TimePlot(self , axis):
         starttime = 0
         dt = sb.dt
-        for x,y,z,title in zip(self.x,self.y,self.z,self.title):
-            endtime = starttime + len(x)*dt
-            timestamp = np.arange(starttime , endtime , dt)
+        for x,y,z,title,timestamp in zip(self.x,self.y,self.z,self.title,self.timestamp):
             if axis =="x":
                 plt.plot(timestamp,x)
                 plt.ylabel("x[mm]")
@@ -38,7 +45,7 @@ class OutPut():
                 plt.ylabel("y[mm]")
 
             else:
-                plt.plot(timestamp,z)
+                plt.scatter(timestamp,z)
                 plt.ylabel("z[mm]")
             plt.xlabel("timestamp[div/" +str(dt) + "]")
             plt.title(title)
@@ -107,7 +114,7 @@ class OutPut():
                         if check_x == value:
                             horizontal_list = np.append(horizontal_list,float(tmp_y))
                             vertical_list = np.append(vertical_list , float(tmp_z))
-            ax.plot(horizontal_list,vertical_list , label = title)
+            ax.scatter(horizontal_list,vertical_list ,s = 0.1 , label = title)
         if value == "":
             ax.set_title(" 2DPlot(" + horizontal_name + vertical_name +")")
         else:
