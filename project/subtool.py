@@ -52,7 +52,7 @@ def runge(Efield, Bfield, q, m, pos0, vec0):
     vec = np.empty((0,3), float)
     vec = np.append(vec, np.array([vec0]), axis=0)
     i = 0
-    limit = 20063
+    limit = 11616
     while 1:
         t = i*dt
         dic_x = PosLToDic(pos[i])
