@@ -54,5 +54,5 @@ print("分散は、", error_ave, "です")
 
 print("Excelで解析的に求めた半径は18.4889751433615[mm]で、その差は", radius_ave-18.4889751433615, "[mm]です")
 
-oput = pj.OutPut.OutPut(plams,Efield,Bfield,400,400)
+oput = pj.OutPut.OutPut(plams,Efield,Bfield,50,50)
 oput.Show()
