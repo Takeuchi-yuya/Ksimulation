@@ -42,7 +42,7 @@ def inputCSV(name):
         #粒子の個数
         num = int(list[0][0])
         for i in range(num):
-            number0 = int(list[6*i + 2][0])
+            number0 = list[6*i + 2][0]
             number = np.append(number, number0)
 
             kind0 = list[6*i + 3][0]
@@ -70,7 +70,7 @@ def inputCSV(name):
             else:
                 m = np.append(m, (atm[kind[i]]/Na)/1000)
                 q = np.append(q, val[i]*q_e)
-    return num, q, m, x0, v0,kind
+    return num, q, m, x0, v0,kind, number
 
 def inputManual():
     q, m = inputPar()
