@@ -45,7 +45,7 @@ class OutPut():
                 plt.ylabel("y[mm]")
 
             else:
-                plt.plot(timestamp,z)
+                plt.scatter(timestamp,z)
                 plt.ylabel("z[mm]")
             plt.xlabel("timestamp[div/" +str(dt) + "]")
             plt.title(title)
@@ -114,7 +114,7 @@ class OutPut():
                         if check_x == value:
                             horizontal_list = np.append(horizontal_list,float(tmp_y))
                             vertical_list = np.append(vertical_list , float(tmp_z))
-            ax.plot(horizontal_list,vertical_list , label = title)
+            ax.scatter(horizontal_list,vertical_list ,s = 0.1 , label = title)
         if value == "":
             ax.set_title(" 2DPlot(" + horizontal_name + vertical_name +")")
         else:

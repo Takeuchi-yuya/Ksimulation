@@ -1,7 +1,7 @@
 import numpy as np
 #とりあえず小さめなdt（十分小さいかは不明)
 #Eの確認は10**(-8)、Bの確認は10**(-6)
-dt = 10**(-8)
+dt = 10**(-9)
 #とりあえず、電荷を気にせず特定の座標範囲に並行電場を生成する関数を作ってみる。
 class SampleFunc():
     def __init__(self,s_pos,e_pos,vector):
