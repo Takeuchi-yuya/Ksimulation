@@ -88,7 +88,7 @@ def runge(Efield, Bfield, q, m, pos0, vec0):
         elif i > limit:
             break
 
-    np.save('runge_posi',x)
+    np.save('runge_posi',pos)
 
     return pos, vec
 
