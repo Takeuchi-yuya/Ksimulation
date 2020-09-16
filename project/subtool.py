@@ -1,7 +1,7 @@
 import numpy as np
 #とりあえず小さめなdt（十分小さいかは不明)
 #Eの確認は10**(-8)、Bの確認は10**(-6)
-dt = 10**(-8)
+dt = 10**(-6)
 #とりあえず、電荷を気にせず特定の座標範囲に並行電場を生成する関数を作ってみる。
 class SampleFunc():
     def __init__(self,s_pos,e_pos,vector):
@@ -91,7 +91,51 @@ def runge(Efield, Bfield, q, m, pos0, vec0):
     np.save('runge_posi',pos)
 
     return pos, vec
+def NewRunge(Efield, Bfield, q, m, pos0, vec0):
+    pos = np.empty((0,3), float)
+    pos = np.append(pos, np.array([pos0]), axis=0)
+    vec = np.empty((0,3), float)
+    vec = np.append(vec, np.array([vec0]), axis=0)
+    i = 0
+    limit = float("inf")
+    while 1:
+        t = i*dt
+        dic_x = PosLToDic(pos[i])
+        E = Efield.VectorField(dic_x)
+        E = [E["x"],E["y"],E["z"]]
 
+        B = Bfield.VectorField(dic_x)
+        B = [B["x"],B["y"],B["z"]]
+
+        k1_x = vec[i]
+        k1_v = Force(t, pos[i], vec[i], E, B, q, m)
+        k2_x = vec[i] + k1_v*dt/2
+        k2_v = Force(t + dt/2, pos[i] + k1_x*dt/2, vec[i] + k1_v*dt/2, E, B, q, m)
+        k3_x = vec[i] + k2_v*dt/2
+        k3_v = Force(t + dt/2, pos[i] + k2_x*dt/2, vec[i] + k2_v*dt/2, E, B, q, m)
+        k4_x = vec[i] + k3_v*dt
+        k4_v = Force(t + dt, pos[i] + k3_x*dt, vec[i] + k3_v*dt, E, B, q, m)
+
+        vec_tem = vec[i] + dt*(k1_v + 2*k2_v + 2*k3_v + k4_v)/6
+        vec = np.append(vec, np.array([vec_tem]), axis=0)
+        pos_tem = pos[i] + dt*(k1_x + 2*k2_x + 2*k3_x + k4_x)/6
+        pos = np.append(pos, np.array([pos_tem]), axis=0)
+
+        i = i + 1
+
+        if i%1000 == 0:
+            print(i, "回目のループです")
+
+        if pos_tem[2] < -0.4:
+            break
+        elif pos_tem[2] > 0.4:
+            break
+        elif i > limit:
+            break
+
+    np.save('runge_posi',pos)
+
+    return pos, vec
 
 def L2Nrom(pos1,pos2):
     return np.sqrt((pos1["x"]-pos2["x"])**2+(pos1["y"]-pos2["y"])**2+(pos1["z"]-pos2["z"])**2)
