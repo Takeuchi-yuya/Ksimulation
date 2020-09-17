@@ -16,6 +16,7 @@ atm = {"H":1.00794,"He":4.00260,"Li":6.941,"Be":9.01218,"B":10.81,"C":12.01,"N":
 input_PATH = 'functions/data/'
 def inputCSV(name):
     path = input_PATH + name +'.csv'
+    particlePlams = []
     with open(path) as f:
         reader = csv.reader(f)
         list = [row for row in reader]
@@ -23,86 +24,114 @@ def inputCSV(name):
             if len(list[i]) > 0:
                 del list[i][0]
 
-        #電場
-        E_start = {}
-        E_start["x"] = float(list[1][1])
-        E_start["y"] = float(list[1][3])
-        E_start["z"] = float(list[1][5])
-        print(E_start)
-        E_end = {}
-        E_end["x"] = float(list[1][8])
-        E_end["y"] = float(list[1][10])
-        E_end["z"] = float(list[1][12])
+    #電場
+    E_start = {}
+    E_start["x"] = float(list[1][1])
+    E_start["y"] = float(list[1][3])
+    E_start["z"] = float(list[1][5])
+    print(E_start)
+    E_end = {}
+    E_end["x"] = float(list[1][8])
+    E_end["y"] = float(list[1][10])
+    E_end["z"] = float(list[1][12])
 
-        E_vec = {}
-        E_vec["x"] = float(list[1][15])
-        E_vec["y"] = float(list[1][17])
-        E_vec["z"] = float(list[1][19])
+    E_vec = {}
+    E_vec["x"] = float(list[1][15])
+    E_vec["y"] = float(list[1][17])
+    E_vec["z"] = float(list[1][19])
 
-        #磁場
-        B_start = {}
-        B_start["x"] = float(list[2][1])
-        B_start["y"] = float(list[2][3])
-        B_start["z"] = float(list[2][5])
+    #磁場
+    B_start = {}
+    B_start["x"] = float(list[2][1])
+    B_start["y"] = float(list[2][3])
+    B_start["z"] = float(list[2][5])
 
-        B_end = {}
-        B_end["x"] = float(list[2][8])
-        B_end["y"] = float(list[2][10])
-        B_end["z"] = float(list[2][12])
+    B_end = {}
+    B_end["x"] = float(list[2][8])
+    B_end["y"] = float(list[2][10])
+    B_end["z"] = float(list[2][12])
 
-        B_vec = {}
-        B_vec["x"] = float(list[2][15])
-        B_vec["y"] = float(list[2][17])
-        B_vec["z"] = float(list[2][19])
-        print(B_vec)
-        #使う変数を初期化
-        #ラベル
-        name = np.empty(0)
-        #粒子の種類
-        kind = np.empty(0)
-        #価数
-        val = np.empty(0)
-        #初期位置
-        x0 = np.empty((0,3), float)
-        #初速度
-        v0 = np.empty((0,3), float)
+    B_vec = {}
+    B_vec["x"] = float(list[2][15])
+    B_vec["y"] = float(list[2][17])
+    B_vec["z"] = float(list[2][19])
+    print(B_vec)
+    #使う変数を初期化
+    #ラベル
+    name = np.empty(0)
+    #粒子の種類
+    kind = np.empty(0)
+    #価数
+    val = np.empty(0)
+    #初期位置
+    x0 = np.empty((0,3), float)
+    #初速度
+    v0 = np.empty((0,3), float)
 
-        #この後に計算する電荷と質量
-        q = np.empty(0)
-        m = np.empty(0)
+    #この後に計算する電荷と質量
+    q = np.empty(0)
+    m = np.empty(0)
 
-        #粒子の個数
-        num = int(list[0][0])
-        for i in range(num):
-            name0 = list[6*i + 4][0]
-            name = np.append(name, name0)
+    #粒子の個数
+    num = int(list[0][0])
+    for i in range(num):
+        name0 = list[6*i + 4][0]
+        name = np.append(name, name0)
 
-            kind0 = list[6*i + 5][0]
-            kind = np.append(kind, kind0)
+        kind0 = list[6*i + 5][0]
+        kind = np.append(kind, kind0)
 
-            val0 = float(list[6*i + 6][0])
-            val = np.append(val, val0)
+        val0 = float(list[6*i + 6][0])
+        val = np.append(val, val0)
 
-            pos0 = list[6*i + 7]
-            pos0 = [float(a) for a in pos0]
-            x0 = np.append(x0, np.array([pos0]), axis=0)
+        pos0 = list[6*i + 7]
+        pos0 = [float(a) for a in pos0]
+        x0 = np.append(x0, np.array([pos0]), axis=0)
 
-            vec0 = list[6*i + 8]
-            vec0 = [float(b) for b in vec0]
-            v0 = np.append(v0, np.array([vec0]), axis=0)
+        vec0 = list[6*i + 8]
+        vec0 = [float(b) for b in vec0]
+        v0 = np.append(v0, np.array([vec0]), axis=0)
 
-            if kind[i] == "e":
-                q = np.append(q, -q_e)
-                m = np.append(m, 9.11/10000000000000000000000000000000)
+        if kind[i] == "e":
+            q0 = -q_e
+            m0 = 9.11/10000000000000000000000000000000
+        elif kind[i] == "p":
+            q0 = q_e
+            m0 = 1.673/1000000000000000000000000000
+        else:
+            q0 = val[i]*q_e
+            m0 = atm[kind[i]]/Na/1000
+        m = np.append(m, m0)
+        q = np.append(q, q0)
+        particlePlams.append({
+                                "name":     name0,
+                                "num":      i,
+                                "kind":     kind0,
+                                "val":      val0,
+                                "pos":      pos0,
+                                "vec":      vec0,
+                                "q":        q0,
+                                "m":        m0,
+                                })
 
-            elif kind[i] == "p":
-                q = np.append(q, q_e)
-                m = np.append(m, 1.673/1000000000000000000000000000)
+    inputDataSet = {
+                     "EFieldplams": {
+                                    "startPos":  E_start,
+                                    "endPos":    E_end,
+                                    "vector":    E_vec,
+                     },
+                     "BFieldplams": {
+                                    "startPos":  B_start,
+                                    "endPos":    B_end,
+                                    "vector":    B_vec,
+                     },
+                     "particlePlams": particlePlams,
+    }
 
-            else:
-                m = np.append(m, (atm[kind[i]]/Na)/1000)
-                q = np.append(q, val[i]*q_e)
-    return num, q, m, x0, v0, kind, name, E_start, E_end, E_vec, B_start, B_end, B_vec
+
+
+
+    return num, inputDataSet
 
 def inputManual():
     q, m = inputPar()

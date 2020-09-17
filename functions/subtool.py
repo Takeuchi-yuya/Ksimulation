@@ -4,11 +4,11 @@ import numpy as np
 dt = 10**(-8)
 #とりあえず、電荷を気にせず特定の座標範囲に並行電場を生成する関数を作ってみる。
 class SampleFunc():
-    def __init__(self,s_pos,e_pos,vector):
-        print("setdata" + str(s_pos) + str(e_pos) + str(vector))
-        self.s_pos = s_pos
-        self.e_pos = e_pos
-        self.vector = vector
+    def __init__(self,fieldplams):
+        #print("setdata" + str(s_pos) + str(e_pos) + str(vector))
+        self.s_pos = fieldplams["startPos"]
+        self.e_pos = fieldplams["endPos"]
+        self.vector = fieldplams["vector"]
         self.zero_vector = {"x" : 0,"y" : 0 , "z" : 0}
     def VectorField(self,position):
         flag = True
@@ -45,8 +45,11 @@ def Force(t, x, v, E, B, q, m):
     f = q*(E + u)/m
     return f
 
-
-def runge(Efield, Bfield, q, m, pos0, vec0):
+def runge(Efield, Bfield, pPlams):
+    q = pPlams["q"]
+    m = pPlams["m"]
+    pos0 = pPlams["pos"]
+    vec0 = pPlams["vec"]
     pos = np.empty((0,3), float)
     pos = np.append(pos, np.array([pos0]), axis=0)
     vec = np.empty((0,3), float)
@@ -98,7 +101,11 @@ def runge(Efield, Bfield, q, m, pos0, vec0):
     np.save('runge_posi',pos)
 
     return pos, vec
-def NewRunge(Efield, Bfield, q, m, pos0, vec0):
+def NewRunge(Efield, Bfield,pPlams):
+    q = pPlams["q"]
+    m = pPlams["m"]
+    pos0 = pPlams["pos"]
+    vec0 = pPlams["vec"]
     pos = np.empty((0,3), float)
     pos = np.append(pos, np.array([pos0]), axis=0)
     vec = np.empty((0,3), float)

@@ -51,14 +51,17 @@ inputDataSet = {
                                   endPos:   正方形のxyzがすべて最大の点
                                   vector:   内部のベクトルの値
                   },
-                  [
-                  inputPlams{
-                                  number:   粒子のナンバリング
-                                  kind:     粒子の種類
-                                  val:      価数
-                                  pos:      初期位置[x,y,z]
-                                  vec:      初期速度[x,y,z]  
-                  }
+                  particlePlams: [
+                                  {
+                                                  name:     name
+                                                  num:      ナンバリング
+                                                  kind:     粒子の種類
+                                                  val:      価数
+                                                  pos:      初期位置[x,y,z]
+                                                  vec:      初期速度[x,y,z]
+                                                  q:        電荷
+                                                  m:        質量  
+                                  }
                   ]
 }
 outputDataSet = {
@@ -68,6 +71,8 @@ outputDataSet = {
                   y:              yの軌跡data
                   z:              zの軌跡data
                   timestamp:      timestamp
+                  E:              電場のinstance
+                  B:              磁場のinstance
                 ]
 }
 
