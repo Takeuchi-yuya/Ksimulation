@@ -53,6 +53,7 @@ def runge(Efield, Bfield, q, m, pos0, vec0):
     vec = np.append(vec, np.array([vec0]), axis=0)
     i = 0
     limit = 20063
+    flag = False
     while 1:
         t = i*dt
         dic_x = PosLToDic(pos[i])
@@ -84,9 +85,12 @@ def runge(Efield, Bfield, q, m, pos0, vec0):
         for j in range(3):
 
             if pos_tem[j] < -0.4:
-                break
+                flag = True
             elif pos_tem[j] > 0.4:
-                break
+                flag = True
+
+        if flag:
+            break
 
         if i > limit:
             break

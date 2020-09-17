@@ -1,12 +1,12 @@
 import numpy as np
 import math
-import project as pj
+import functions as func
 
-sub = pj.subtool
+sub = func.subtool
 Efield = sub.SampleFunc({"x":-1000,"y":-1000,"z":-1000},{"x":1000,"y":1000,"z":1000},{"x":0.0,"y":0.0,"z":0.0})
 Bfield = sub.SampleFunc({"x":-1000,"y":-1000,"z":-1000},{"x":1000,"y":1000,"z":1000},{"x":0.0,"y":0.0,"z":0.0505})
 
-I = pj.InPut
+I = func.InPut
 num, q, m, pos0, vec0, kind, number = I.inputCSV("OutTestSamB")
 
 R = {}
@@ -54,5 +54,5 @@ print("分散は、", error_ave, "です")
 
 print("Excelで解析的に求めた半径は18.4889751433615[mm]で、その差は", radius_ave-18.4889751433615, "[mm]です")
 
-oput = pj.OutPut.OutPut(plams,Efield,Bfield,50,50)
+oput = func.OutPut.OutPut(plams,Efield,Bfield,50,50)
 oput.Show()

@@ -1,12 +1,14 @@
 import numpy as np
 import math
-import project as pj
+import functions as func
+
 
 print("input start")
-I = pj.InPut
+I = func.InPut
 num, q, m, pos0, vec0 , kind, name, E_start, E_end, E_vec, B_start, B_end, B_vec = I.inputCSV("sam2")
+
 print("input end")
-sub = pj.subtool
+sub = func.subtool
 Efield = sub.SampleFunc(E_start, E_end, E_vec)
 Bfield = sub.SampleFunc(B_start, B_end, B_vec)
 R = []
@@ -33,7 +35,8 @@ for i in range(num):
     plams = {"title":name[i],"x":R[i][0],"y":R[i][1],"z":R[i][2]}
     print("output start")
     if i == 0:
-        oput = pj.OutPut.OutPut(plams,Efield,Bfield,200,400,timestamp)
+        oput = func.OutPut.OutPut(plams,Efield,Bfield,200,400,timestamp)
+
     else:
         oput.AddPlams(plams,timestamp)
 
