@@ -7,7 +7,7 @@ Efield = sub.SampleFunc({"x":-0.1,"y":-0.1,"z":-0.1},{"x":0.1,"y":0.1,"z":0.1},{
 Bfield = sub.SampleFunc({"x":-0.1,"y":-0.1,"z":-0.1},{"x":0.1,"y":0.1,"z":0.1},{"x":0.0,"y":0.005,"z":0.0})
 print("input start")
 I = pj.InPut
-num, q, m, pos0, vec0 , kind, number = I.inputCSV("sam2")
+num, q, m, pos0, vec0 , kind, number = I.inputCSV("samSn")
 print("input end")
 R = []
 
