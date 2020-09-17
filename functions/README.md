@@ -33,3 +33,40 @@
 出力 OutPut.py
 - matplotlibのグラフ出力を利用する。
 - CADから3D描画したい [参照](https://resp-kke.azurewebsites.net/2020/02/24/programtipspython_plotly3d/)
+
+
+### dataset
+以下予定（未実装）
+```Python
+inputDataSet = {
+                  EFieldplams: {
+                  #sample場は最小の点と最大の点から作られる立方体内だけに一様な力がかかる場をつかう
+                                  startPos: 正方形のxyzがすべて最小の点
+                                  endPos:   正方形のxyzがすべて最大の点
+                                  vector:   内部のベクトルの値
+                  },
+                  BFieldplams: {
+                  #sample場は最小の点と最大の点から作られる立方体内だけに一様な力がかかる場をつかう
+                                  startPos: 正方形のxyzがすべて最小の点
+                                  endPos:   正方形のxyzがすべて最大の点
+                                  vector:   内部のベクトルの値
+                  },
+                  [
+                  inputPlams{
+                                  number:   粒子のナンバリング
+                                  kind:     粒子の種類
+                                  val:      価数
+                                  pos:      初期位置[x,y,z]
+                                  vec:      初期速度[x,y,z]  
+                  }
+                  ]
+}
+outputDataSet = {
+                  title:          粒子の種類と価数
+                  x:              xの軌跡data
+                  y:              yの軌跡data
+                  z:              zの軌跡data
+                  timestamp:      timestamp
+}
+
+```
