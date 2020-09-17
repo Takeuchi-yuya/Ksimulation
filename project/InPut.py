@@ -23,9 +23,41 @@ def inputCSV(name):
             if len(list[i]) > 0:
                 del list[i][0]
 
+        #電場
+        E_start = {}
+        E_start["x"] = float(list[1][1])
+        E_start["y"] = float(list[1][3])
+        E_start["z"] = float(list[1][5])
+        print(E_start)
+        E_end = {}
+        E_end["x"] = float(list[1][8])
+        E_end["y"] = float(list[1][10])
+        E_end["z"] = float(list[1][12])
+
+        E_vec = {}
+        E_vec["x"] = float(list[1][15])
+        E_vec["y"] = float(list[1][17])
+        E_vec["z"] = float(list[1][19])
+
+        #磁場
+        B_start = {}
+        B_start["x"] = float(list[2][1])
+        B_start["y"] = float(list[2][3])
+        B_start["z"] = float(list[2][5])
+
+        B_end = {}
+        B_end["x"] = float(list[2][8])
+        B_end["y"] = float(list[2][10])
+        B_end["z"] = float(list[2][12])
+
+        B_vec = {}
+        B_vec["x"] = float(list[2][15])
+        B_vec["y"] = float(list[2][17])
+        B_vec["z"] = float(list[2][19])
+        print(B_vec)
         #使う変数を初期化
         #ラベル
-        number = np.empty(0)
+        name = np.empty(0)
         #粒子の種類
         kind = np.empty(0)
         #価数
@@ -42,20 +74,20 @@ def inputCSV(name):
         #粒子の個数
         num = int(list[0][0])
         for i in range(num):
-            number0 = list[6*i + 2][0]
-            number = np.append(number, number0)
+            name0 = list[6*i + 4][0]
+            name = np.append(name, name0)
 
-            kind0 = list[6*i + 3][0]
+            kind0 = list[6*i + 5][0]
             kind = np.append(kind, kind0)
 
-            val0 = float(list[6*i + 4][0])
+            val0 = float(list[6*i + 6][0])
             val = np.append(val, val0)
 
-            pos0 = list[6*i + 5]
+            pos0 = list[6*i + 7]
             pos0 = [float(a) for a in pos0]
             x0 = np.append(x0, np.array([pos0]), axis=0)
 
-            vec0 = list[6*i + 6]
+            vec0 = list[6*i + 8]
             vec0 = [float(b) for b in vec0]
             v0 = np.append(v0, np.array([vec0]), axis=0)
 
@@ -70,7 +102,7 @@ def inputCSV(name):
             else:
                 m = np.append(m, (atm[kind[i]]/Na)/1000)
                 q = np.append(q, val[i]*q_e)
-    return num, q, m, x0, v0,kind, number
+    return num, q, m, x0, v0, kind, name, E_start, E_end, E_vec, B_start, B_end, B_vec
 
 def inputManual():
     q, m = inputPar()

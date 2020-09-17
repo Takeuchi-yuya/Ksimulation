@@ -2,13 +2,13 @@ import numpy as np
 import math
 import project as pj
 
-sub = pj.subtool
-Efield = sub.SampleFunc({"x":-0.1,"y":-0.1,"z":-0.1},{"x":0.1,"y":0.1,"z":0.1},{"x":0.0,"y":0.0,"z":0.0})
-Bfield = sub.SampleFunc({"x":-0.1,"y":-0.1,"z":-0.1},{"x":0.1,"y":0.1,"z":0.1},{"x":0.0,"y":0.005,"z":0.0})
 print("input start")
 I = pj.InPut
-num, q, m, pos0, vec0 , kind, number = I.inputCSV("samSn")
+num, q, m, pos0, vec0 , kind, name, E_start, E_end, E_vec, B_start, B_end, B_vec = I.inputCSV("sam2")
 print("input end")
+sub = pj.subtool
+Efield = sub.SampleFunc(E_start, E_end, E_vec)
+Bfield = sub.SampleFunc(B_start, B_end, B_vec)
 R = []
 
 for i in range(num):
@@ -30,10 +30,10 @@ for i in range(num):
     print(len(timestamp))
     r = np.array([X, Y, Z])
     R.append(r)
-    plams = {"title":number[i] + ":" +  kind[i],"x":R[i][0],"y":R[i][1],"z":R[i][2]}
+    plams = {"title":name[i],"x":R[i][0],"y":R[i][1],"z":R[i][2]}
     print("output start")
     if i == 0:
-        oput = pj.OutPut.OutPut(plams,Efield,Bfield,400,400,timestamp)
+        oput = pj.OutPut.OutPut(plams,Efield,Bfield,200,400,timestamp)
     else:
         oput.AddPlams(plams,timestamp)
 
