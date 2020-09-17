@@ -62,11 +62,13 @@ inputDataSet = {
                   ]
 }
 outputDataSet = {
+                [
                   title:          粒子の種類と価数
                   x:              xの軌跡data
                   y:              yの軌跡data
                   z:              zの軌跡data
                   timestamp:      timestamp
+                ]
 }
 
 ```
