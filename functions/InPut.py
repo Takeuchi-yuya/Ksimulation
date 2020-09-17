@@ -13,7 +13,7 @@ atm = {"H":1.00794,"He":4.00260,"Li":6.941,"Be":9.01218,"B":10.81,"C":12.01,"N":
     "Zr":91.22,"Nb":92.91,"Mo":95.94,"Tc":99,"Ru":101.1,"Rh":102.9,"Pb":106.4,"Ag":107.9,"Cd":112.4,"In":114.8, \
     "Sn":118.7,"Sb":121.8,"Te":127.6,"I":126.9,"Xe":131.3,"Cs":132.9,"Ba":137.3,"La":138.9,"Ce":140.1,"Pr":140.9, \
     "Nd":144.2}
-input_PATH = 'project/data/'
+input_PATH = 'functions/data/'
 def inputCSV(name):
     path = input_PATH + name +'.csv'
     with open(path) as f:

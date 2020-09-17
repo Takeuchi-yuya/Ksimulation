@@ -1,12 +1,12 @@
 import numpy as np
 import math
-import project as pj
+import functions as func
 
-sub = pj.subtool
+sub = func.subtool
 Efield = sub.SampleFunc({"x":-0.1,"y":-0.1,"z":-0.1},{"x":1.0,"y":1.0,"z":1.0},{"x":0.0,"y":0.0,"z":500.0})
 Bfield = sub.SampleFunc({"x":-0.1,"y":-0.1,"z":-0.1},{"x":0.1,"y":0.1,"z":0.1},{"x":0.0,"y":0.0,"z":0.0})
 
-I = pj.InPut
+I = func.InPut
 num, q, m, pos0, vec0, kind, number = I.inputCSV("OutTestSamE")
 
 R = {}
@@ -33,5 +33,5 @@ dt = sub.dt
 print("設定した座標に到達するまでにかかった時間は、", (l-1) * dt, "[s]です。")
 print("Excelで解析的に計算した結果は、1.22225577993463e-05[s]です")
 
-oput = pj.OutPut.OutPut(plams,Efield,Bfield,400,400)
+oput = func.OutPut.OutPut(plams,Efield,Bfield,400,400)
 oput.Show()
