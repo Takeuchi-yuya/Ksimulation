@@ -81,11 +81,14 @@ def runge(Efield, Bfield, q, m, pos0, vec0):
         if i%1000 == 0:
             print(i, "回目のループです")
 
-        if pos_tem[2] < -0.4:
-            break
-        elif pos_tem[2] > 0.4:
-            break
-        elif i > limit:
+        for j in range(3):
+
+            if pos_tem[j] < -0.4:
+                break
+            elif pos_tem[j] > 0.4:
+                break
+        
+        if i > limit:
             break
 
     np.save('runge_posi',pos)
