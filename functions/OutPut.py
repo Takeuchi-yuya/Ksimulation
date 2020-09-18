@@ -168,12 +168,14 @@ class OutPut():
                         U_list = np.append(U_list,vector["x"])
                         V_list = np.append(V_list,vector["y"])
         #bairitu
-        magnification = 10
+        #magnification = 10
         if type == 'E':
+            magnification = 0.4
             #print(U_list)
             #print(V_list)
             ax.quiver(horizontal_list,vertical_list,magnification*U_list,magnification*V_list,color = 'red' ,angles='xy',scale_units='xy', scale=6.5)
         elif type == 'B':
+            magnification = 8
             #print(U_list)
             #print(V_list)
             ax.quiver(horizontal_list,vertical_list,magnification*magnification*magnification*magnification*U_list,magnification*magnification*magnification*V_list,color = 'blue' ,angles='xy',scale_units='xy', scale=6.5)
