@@ -20,43 +20,16 @@ def inputCSV(name):
     with open(path) as f:
         reader = csv.reader(f)
         list = [row for row in reader]
-        for i in range(len(list)):
-            if len(list[i]) > 0:
-                del list[i][0]
 
+    #使う変数を初期化
     #電場
     E_start = {}
-    E_start["x"] = float(list[1][1])
-    E_start["y"] = float(list[1][3])
-    E_start["z"] = float(list[1][5])
-    print(E_start)
     E_end = {}
-    E_end["x"] = float(list[1][8])
-    E_end["y"] = float(list[1][10])
-    E_end["z"] = float(list[1][12])
-
     E_vec = {}
-    E_vec["x"] = float(list[1][15])
-    E_vec["y"] = float(list[1][17])
-    E_vec["z"] = float(list[1][19])
-
     #磁場
     B_start = {}
-    B_start["x"] = float(list[2][1])
-    B_start["y"] = float(list[2][3])
-    B_start["z"] = float(list[2][5])
-
     B_end = {}
-    B_end["x"] = float(list[2][8])
-    B_end["y"] = float(list[2][10])
-    B_end["z"] = float(list[2][12])
-
     B_vec = {}
-    B_vec["x"] = float(list[2][15])
-    B_vec["y"] = float(list[2][17])
-    B_vec["z"] = float(list[2][19])
-    print(B_vec)
-    #使う変数を初期化
     #ラベル
     name = np.empty(0)
     #粒子の種類
@@ -64,34 +37,53 @@ def inputCSV(name):
     #価数
     val = np.empty(0)
     #初期位置
-    x0 = np.empty((0,3), float)
+    pos = np.empty((0,3), float)
     #初速度
-    v0 = np.empty((0,3), float)
+    vec = np.empty((0,3), float)
 
     #この後に計算する電荷と質量
     q = np.empty(0)
     m = np.empty(0)
 
-    #粒子の個数
-    num = int(list[0][0])
-    for i in range(num):
-        name0 = list[6*i + 4][0]
-        name = np.append(name, name0)
+    for i in range(len(list)):
+        header = list[i][0]
+        if header=="Efield":
+            E_start["x"] = float(list[i][2])
+            E_start["y"] = float(list[i][4])
+            E_start["z"] = float(list[i][6])
+            E_end["x"] = float(list[i][9])
+            E_end["y"] = float(list[i][11])
+            E_end["z"] = float(list[i][13])
+            E_vec["x"] = float(list[i][16])
+            E_vec["y"] = float(list[i][18])
+            E_vec["z"] = float(list[i][20])
+        elif header=="Bfield":
+            B_start["x"] = float(list[i][2])
+            B_start["y"] = float(list[i][4])
+            B_start["z"] = float(list[i][6])
+            B_end["x"] = float(list[i][9])
+            B_end["y"] = float(list[i][11])
+            B_end["z"] = float(list[i][13])
+            B_vec["x"] = float(list[i][16])
+            B_vec["y"] = float(list[i][18])
+            B_vec["z"] = float(list[i][20])
+        elif header=="name":
+            name_in = list[i][1]
+            name = np.append(name, name_in)
+        elif header=="kind":
+            kind_in = list[i][1]
+            kind = np.append(kind, kind_in)
+        elif header=="val":
+            val_in = int(list[i][1])
+            val = np.append(val, val_in)
+        elif header=="pos":
+            pos0 = [float(list[i][a]) for a in range(1,4)]
+            pos = np.append(pos, np.array([pos0]), axis=0)
+        elif header=="vec":
+            vec0 = [float(list[i][a]) for a in range(1,4)]
+            vec = np.append(vec, np.array([vec0]), axis=0)
 
-        kind0 = list[6*i + 5][0]
-        kind = np.append(kind, kind0)
-
-        val0 = float(list[6*i + 6][0])
-        val = np.append(val, val0)
-
-        pos0 = list[6*i + 7]
-        pos0 = [float(a) for a in pos0]
-        x0 = np.append(x0, np.array([pos0]), axis=0)
-
-        vec0 = list[6*i + 8]
-        vec0 = [float(b) for b in vec0]
-        v0 = np.append(v0, np.array([vec0]), axis=0)
-
+    for i in range(len(kind)):
         if kind[i] == "e":
             q0 = -q_e
             m0 = 9.11/10000000000000000000000000000000
@@ -103,15 +95,16 @@ def inputCSV(name):
             m0 = atm[kind[i]]/Na/1000
         m = np.append(m, m0)
         q = np.append(q, q0)
+
+    for i in range(len(kind)):
         particlePlams.append({
-                                "name":     name0,
-                                "num":      i,
-                                "kind":     kind0,
-                                "val":      val0,
-                                "pos":      pos0,
-                                "vec":      vec0,
-                                "q":        q0,
-                                "m":        m0,
+                                "name":     name[i],
+                                "kind":     kind[i],
+                                "val":      val[i],
+                                "pos":      pos[i],
+                                "vec":      vec[i],
+                                "q":        q[i],
+                                "m":        m[i],
                                 })
 
     inputDataSet = {
@@ -131,7 +124,7 @@ def inputCSV(name):
 
 
 
-    return num, inputDataSet
+    return inputDataSet
 
 def inputManual():
     q, m = inputPar()
