@@ -2,7 +2,7 @@ import numpy as np
 from matplotlib import pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 import csv
-from . import subtool as sb
+from . import subtool as sub
 #from CreatTestdata import SampleFunc as SF
 #とりあえず、二次元三次元アニメーションを外で選択できるようにclassで書いていく。
 
@@ -17,9 +17,9 @@ class OutPut():
         self.horizontalLim = horizontalLim
         self.verticalLim = verticalLim
         starttime = 0
-        endtime = starttime + len(self.x)*sb.dt
+        endtime = starttime + len(self.x)*sub.dt
         if timestamp == "":
-            timestamp = np.arange(starttime , endtime , sb.dt)
+            timestamp = np.arange(starttime , endtime , sub.dt)
         self.timestamp = [timestamp]
     #とりあえず、最初から三次元データが入力された状態で二次元に切り取って出力したい。
     #xy,yz,xzをそれぞれz,x,yで選択し値設定することで出力を試みる。
@@ -29,13 +29,13 @@ class OutPut():
         self.y.append(plams["y"])
         self.z.append(plams["z"])
         starttime = 0
-        endtime = starttime + len(self.x)*sb.dt
+        endtime = starttime + len(self.x)*sub.dt
         if timestamp == "":
-            timestamp = np.arange(starttime , endtime , sb.dt)
+            timestamp = np.arange(starttime , endtime , sub.dt)
         self.timestamp.append(timestamp)
     def TimePlot(self , axis):
         starttime = 0
-        dt = sb.dt
+        dt = sub.dt
         for x,y,z,title,timestamp in zip(self.x,self.y,self.z,self.title,self.timestamp):
             if axis =="x":
                 plt.plot(timestamp,x)
