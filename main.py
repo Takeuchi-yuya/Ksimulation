@@ -5,7 +5,7 @@ import functions as func
 
 print("input start")
 I = func.InPut
-num, inputDataSet = I.inputCSV("sam2")
+inputDataSet = I.inputCSV("sam2")
 
 print("input end")
 sub = func.subtool
