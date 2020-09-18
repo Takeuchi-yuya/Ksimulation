@@ -10,7 +10,7 @@ class SampleFunc():
         self.e_pos = fieldplams["endPos"]
         self.vector = fieldplams["vector"]
         self.zero_vector = {"x" : 0,"y" : 0 , "z" : 0}
-    def VectorField(self,pPlams,position):
+    def VectorField(self,position):
         flag = True
         for ax in position:
             if self.s_pos[ax] <= position[ax] <= self.e_pos[ax]:
@@ -158,8 +158,8 @@ def NewRunge(Efield, Bfield,pPlams):
     flag = False
     while 1:
         dic_x = PosLToDic(pos[i])
-        E = Efield.VectorField(pPlams,dic_x)
-        B = Bfield.VectorField(pPlams,dic_x)
+        E = Efield.VectorField(dic_x)
+        B = Bfield.VectorField(dic_x)
         #力の強いところで細かく刻む
         if E == {"x" : 0,"y" : 0 , "z" : 0} and B == {"x" : 0,"y" : 0 , "z" : 0}:
             tmp_dt = dt *100

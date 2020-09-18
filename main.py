@@ -10,8 +10,9 @@ print(inputDataSet)
 
 print("input end")
 sub = func.subtool
-Ef = func.Efield
-Efield = Ef.Efield(Ef.makeGridParticle(10))
+#Ef = func.Efield
+#Efield = Ef.Efield(Ef.makeGridParticle(0.000000000001))
+Efield = sub.SampleFunc(inputDataSet["EFieldplams"])
 Bfield = sub.SampleFunc(inputDataSet["BFieldplams"])
 outputDataSet = sub.Calc(inputDataSet,Efield,Bfield)
 oput = func.OutPut.OutPut(outputDataSet,200,400)

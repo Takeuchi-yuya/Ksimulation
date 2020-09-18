@@ -20,6 +20,8 @@ class Efield():
         #磁場によるローレンツ力の項の計算は後回し
         return {"x":force[0],"y":force[1],"z":force[2]}
     def OutPutVectorField(self,pos):
+        for i in pos:
+            pos[i] = pos[i]/1000
         force = np.array([0,0,0])
 
         #他の質点とのクーロン力
@@ -35,14 +37,15 @@ class Efield():
         #磁場によるローレンツ力の項の計算は後回し
         return {"x":force[0],"y":force[1],"z":force[2]}
 def makeGridParticle(Q):
-    z1 = -0.1
-    z2 = 0.1
+    x1 = -0.1
+    x2 = 0.1
     length =0.2
-    grid = 100
+    grid = 10
     q = Q/grid**2
     facts = []
-    for x in np.arange(-length/2,length/2,grid):
-        for y in np.arange(-length/2,length/2,grid):
-            facts.append({"x":x,"y":y,"z":z1,"Q":q})
-            facts.append({"x":x,"y":y,"z":z2,"Q":-q})
+    for z in np.linspace(-length/2,length/2,grid):
+        for y in np.linspace(-length/2,length/2,grid):
+            facts.append({"x":x1,"y":y,"z":z,"Q":-q})
+            facts.append({"x":x2,"y":y,"z":z,"Q":q})
+    print("factlen",len(facts))
     return facts

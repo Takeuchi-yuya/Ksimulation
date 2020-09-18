@@ -136,6 +136,7 @@ class OutPut():
 
 
     def vectorTwoDPlot(self,vf,ax,losAxis,type,value = 0):
+        print("vectorplot start")
         grid_count = 100
         horizontal_list = np.array([])
         vertical_list   = np.array([])
@@ -164,12 +165,13 @@ class OutPut():
                         vertical_list = np.append(vertical_list,vertical)
                         U_list = np.append(U_list,vector["x"])
                         V_list = np.append(V_list,vector["y"])
+        print("end")
         #bairitu
         #magnification = 10
         if type == 'E':
             magnification = 0.4
-            #print(U_list)
-            #print(V_list)
+            print(U_list)
+            print(V_list)
             ax.quiver(horizontal_list,vertical_list,magnification*U_list,magnification*V_list,color = 'red' ,angles='xy',scale_units='xy', scale=6.5)
         elif type == 'B':
             magnification = 8
