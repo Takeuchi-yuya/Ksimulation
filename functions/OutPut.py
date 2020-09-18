@@ -7,20 +7,16 @@ from . import subtool as sub
 #とりあえず、二次元三次元アニメーションを外で選択できるようにclassで書いていく。
 
 class OutPut():
-    def __init__(self,plams,E = "",B = "",horizontalLim = 4000,verticalLim = 4000,timestamp = ""):
-        self.title = [plams["title"]]
-        self.x = [plams["x"]]
-        self.y = [plams["y"]]
-        self.z = [plams["z"]]
-        self.E = E
-        self.B = B
+    def __init__(self,OPD,horizontalLim = 4000,verticalLim = 4000):
+        self.title = OPD["pData"]["title"]
+        self.x = OPD["pData"]["x"]
+        self.y = OPD["pData"]["y"]
+        self.z = OPD["pData"]["z"]
+        self.timestamp = OPD["pData"]["timestamp"]
+        self.E = OPD["E"]
+        self.B = OPD["B"]
         self.horizontalLim = horizontalLim
         self.verticalLim = verticalLim
-        starttime = 0
-        endtime = starttime + len(self.x)*sub.dt
-        if timestamp == "":
-            timestamp = np.arange(starttime , endtime , sub.dt)
-        self.timestamp = [timestamp]
     #とりあえず、最初から三次元データが入力された状態で二次元に切り取って出力したい。
     #xy,yz,xzをそれぞれz,x,yで選択し値設定することで出力を試みる。
     def AddPlams(self , plams ,timestamp = ""):

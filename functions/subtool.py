@@ -45,6 +45,45 @@ def Force(t, x, v, E, B, q, m):
     f = q*(E + u)/m
     return f
 
+def Calc(inputDataSet,Efield,Bfield,rungeFlag = True):
+    pData = {"x": [],
+             "y": [],
+             "z": [],
+             "timestamp": [],
+             "title": [],
+             }
+    for particlePlams in inputDataSet["particlePlams"]:
+
+        #以下ルンゲクッタ法。
+        print("runge start")
+        if rungeFlag:
+            pos, vec ,timestamp = NewRunge(Efield, Bfield, particlePlams)
+        else:
+            pos, vec = runge(Efield, Bfield, particlePlams)
+            timestamp = ""
+        #pos, vec = sub.runge(Efield, Bfield, q[i], m[i], pos0[i], vec0[i])
+        print("runge end")
+        l = len(pos)
+        X = np.array([pos[j][0] for j in range(l)])
+        X = 1000*X
+        Y = np.array([pos[j][1] for j in range(l)])
+        Y = 1000*Y
+        Z = np.array([pos[j][2] for j in range(l)])
+        Z = 1000*Z
+        pData["x"].append(X)
+        pData["y"].append(Y)
+        pData["z"].append(Z)
+        pData["title"].append(particlePlams["name"])
+        pData["timestamp"].append(timestamp)
+
+    return {
+            "E":     Efield,
+            "B":     Bfield,
+            "pData": pData,
+    }
+
+
+
 def runge(Efield, Bfield, pPlams):
     q = pPlams["q"]
     m = pPlams["m"]
