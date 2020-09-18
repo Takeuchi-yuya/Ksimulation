@@ -9,7 +9,8 @@ inputDataSet = I.inputCSV("sam2")
 
 print("input end")
 sub = func.subtool
-Efield = sub.SampleFunc(inputDataSet["EFieldplams"])
+Ef = func.Efield
+Efield = Ef.Efield(Ef.makeGridParticle(10))
 Bfield = sub.SampleFunc(inputDataSet["BFieldplams"])
 outputDataSet = sub.Calc(inputDataSet,Efield,Bfield)
 oput = func.OutPut.OutPut(outputDataSet,200,400)

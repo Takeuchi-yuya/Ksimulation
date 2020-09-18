@@ -13,6 +13,7 @@ class OutPut():
         self.y = OPD["pData"]["y"]
         self.z = OPD["pData"]["z"]
         self.timestamp = OPD["pData"]["timestamp"]
+        self.q = OPD["pData"]["q"]
         self.E = OPD["E"]
         self.B = OPD["B"]
         self.horizontalLim = horizontalLim

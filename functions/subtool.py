@@ -10,7 +10,7 @@ class SampleFunc():
         self.e_pos = fieldplams["endPos"]
         self.vector = fieldplams["vector"]
         self.zero_vector = {"x" : 0,"y" : 0 , "z" : 0}
-    def VectorField(self,position):
+    def VectorField(self,pPlams,position):
         flag = True
         for ax in position:
             if self.s_pos[ax] <= position[ax] <= self.e_pos[ax]:
@@ -51,6 +51,7 @@ def Calc(inputDataSet,Efield,Bfield,rungeFlag = True):
              "z": [],
              "timestamp": [],
              "title": [],
+             "q": [],
              }
     for particlePlams in inputDataSet["particlePlams"]:
 
@@ -75,6 +76,7 @@ def Calc(inputDataSet,Efield,Bfield,rungeFlag = True):
         pData["z"].append(Z)
         pData["title"].append(particlePlams["name"])
         pData["timestamp"].append(timestamp)
+        pData["q"].append(particlePlams["q"])
 
     return {
             "E":     Efield,
@@ -156,8 +158,8 @@ def NewRunge(Efield, Bfield,pPlams):
     flag = False
     while 1:
         dic_x = PosLToDic(pos[i])
-        E = Efield.VectorField(dic_x)
-        B = Bfield.VectorField(dic_x)
+        E = Efield.VectorField(pPlams,dic_x)
+        B = Bfield.VectorField(pPlams,dic_x)
         #力の強いところで細かく刻む
         if E == {"x" : 0,"y" : 0 , "z" : 0} and B == {"x" : 0,"y" : 0 , "z" : 0}:
             tmp_dt = dt *100
