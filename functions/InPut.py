@@ -1,6 +1,7 @@
 import numpy as np
 import math as ma
 import csv
+import json
 
 Na = 6.02*100000000000000000000000
 q_e = 1.6/10000000000000000000
@@ -124,6 +125,25 @@ def inputCSV(name):
 
 
 
+    return inputDataSet
+
+def inputJson(name):
+    path = input_PATH + name +'.json'
+    with open(path, 'r') as f:
+        inputDataSet = json.load(f)
+
+    for num in range(len(inputDataSet["particlePlams"])):
+        if inputDataSet["particlePlams"][num]["kind"] == "e":
+            q = -q_e
+            m = 9.11/10000000000000000000000000000000
+        elif inputDataSet["particlePlams"][num]["kind"] == "p":
+            q = q_e
+            m = 1.673/1000000000000000000000000000
+        else:
+            q = inputDataSet["particlePlams"][num]["val"]*q_e
+            m = atm[inputDataSet["particlePlams"][num]["kind"]]/Na/1000
+        inputDataSet["particlePlams"][num]["q"] = q
+        inputDataSet["particlePlams"][num]["m"] = m
     return inputDataSet
 
 def inputManual():

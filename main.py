@@ -5,7 +5,8 @@ import functions as func
 
 print("input start")
 I = func.InPut
-inputDataSet = I.inputCSV("sam2")
+inputDataSet = I.inputJson("sample")
+print(inputDataSet)
 
 print("input end")
 sub = func.subtool
