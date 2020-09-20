@@ -20,16 +20,6 @@ class OutPut():
         self.verticalLim = verticalLim
     #とりあえず、最初から三次元データが入力された状態で二次元に切り取って出力したい。
     #xy,yz,xzをそれぞれz,x,yで選択し値設定することで出力を試みる。
-    def AddPlams(self , plams ,timestamp = ""):
-        self.title.append(plams["title"])
-        self.x.append(plams["x"])
-        self.y.append(plams["y"])
-        self.z.append(plams["z"])
-        starttime = 0
-        endtime = starttime + len(self.x)*sub.dt
-        if timestamp == "":
-            timestamp = np.arange(starttime , endtime , sub.dt)
-        self.timestamp.append(timestamp)
     def TimePlot(self , axis):
         starttime = 0
         dt = sub.dt
