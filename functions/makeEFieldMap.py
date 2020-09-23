@@ -6,14 +6,14 @@ import scipy.constants as cons
 #3次元プロットするためのモジュール
 from mpl_toolkits.mplot3d import Axes3D
 #行列N×N
-N = 100
+N = 200
 #演算範囲
 lim = 0.5
 #刻み幅
 dr = lim*2/N
 #真空中の誘電率
 e = 8.854e-12
-V = 16800 #[V/m]
+V = 168 #[V/m]
 #系内の最大の電位を入れる変数．ある有限の値を入れておく(ゼロ割り防止)
 MaxPhi = 1.0e-10
 def m2Dex(m):
@@ -82,14 +82,17 @@ ylist = np.array([])
 philist = np.array([])
 Ulist = np.array([])
 Vlist = np.array([])
+maxE = 0
 for x in range(N-1):
     for y in range(N-1):
         xlist = np.append(xlist , x)
         ylist = np.append(ylist , y)
         philist = np.append(philist , phimap[y][x])
-        Ulist = np.append((phimap[y][x+1]-phimap[y][x]),Ulist)
-        Vlist = np.append((phimap[y+1][x]-phimap[y][x]),Vlist)
-print(x,y,phimap[y][x])
+        Ulist = np.append((phimap[y][x+1]-phimap[y][x])/dr,Ulist)
+        Vlist = np.append((phimap[y+1][x]-phimap[y][x])/dr,Vlist)
+        if maxE <(np.sqrt((phimap[y][x+1]-phimap[y][x])**2 + (phimap[y+1][x]-phimap[y][x])**2)/dr):
+            maxE = (np.sqrt((phimap[y][x+1]-phimap[y][x])**2 + (phimap[y+1][x]-phimap[y][x])**2))/dr
+            print(maxE)
 fig = plt.figure()
 
 
