@@ -13,7 +13,7 @@ lim = 0.5
 dr = lim*2/N
 #真空中の誘電率
 e = 8.854e-12
-rho = 10**(-4)*cons.e
+V = 16800 #[V/m]
 #系内の最大の電位を入れる変数．ある有限の値を入れておく(ゼロ割り防止)
 MaxPhi = 1.0e-10
 def m2Dex(m):
@@ -22,21 +22,17 @@ def m2Dex(m):
 
 print("dr",lim*2/N)
 #とりあえず二次元
-rhomap = [[0 for j in range(N)] for i in range(N)]
-phimap = rhomap.copy()
-#flagmap = [[0 for j in range(N)] for i in range(N)]
-rholist = []
+phimap = [[0 for j in range(N)] for i in range(N)]
+flagmap = [[False for i in range(N)] for j in range(N)]
 #とりあえず、y=0.1,-0.1,-0.1<x<0.1のとこに電荷置く
 for x in np.arange(-0.1,0.1,dr):
     xDex = m2Dex(x)
     yDex = m2Dex(0.1)
-    rholist.append([xDex,yDex,rho])
-    rhomap[yDex][xDex] = rho
-    #flagmap[yDex][xDex] = 2
+    phimap[yDex][xDex] = V
+    flagmap[yDex][xDex] = True
     yDex = m2Dex(-0.1)
-    rholist.append([xDex,yDex,-rho])
-    rhomap[yDex][xDex] = -rho
-    #flagmap[yDex][xDex] = 2
+    phimap[yDex][xDex] = -V
+    flagmap[yDex][xDex] = True
 #print(rhomap)
 count = 0
 '''
@@ -65,8 +61,10 @@ while MaxErr>Conv:
     flag = False
     for x in range(1,N-1):
         for y in range(1,N-1):
+            if flagmap[y][x]:
+                continue
             Prev_phi = phimap[y][x]
-            tmp =1/4 * (rhomap[y][x]*dr*dr/e+phimap[y+1][x]+phimap[y-1][x]+phimap[y][x+1]+phimap[y][x-1])
+            tmp =1/4 * (phimap[y+1][x]+phimap[y-1][x]+phimap[y][x+1]+phimap[y][x-1])
             if MaxPhi < abs(tmp):
                 MaxPhi = abs(tmp)
             phimap[y][x] = tmp
