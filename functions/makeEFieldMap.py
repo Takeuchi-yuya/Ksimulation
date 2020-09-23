@@ -31,7 +31,7 @@ for x in np.arange(-0.1,0.1,dr):
     phimap[yDex][xDex] = V
     flagmap[yDex][xDex] = True
     yDex = m2Dex(-0.1)
-    phimap[yDex][xDex] = -V
+    phimap[yDex][xDex] = 0
     flagmap[yDex][xDex] = True
 #print(rhomap)
 count = 0
@@ -58,6 +58,7 @@ while MaxErr>Conv:
     #print(phimap)
     MaxErr = CurErr = 0.0
     count = 1 + count
+
     flag = False
     for x in range(1,N-1):
         for y in range(1,N-1):
@@ -71,28 +72,29 @@ while MaxErr>Conv:
             CurErr = (abs(phimap[y][x] - Prev_phi))/MaxPhi
             if MaxErr < CurErr:
                  MaxErr = CurErr
-
+    if count % 100 == 0:
+        print(count,MaxErr)
 
 print(count)
         #print(phimap)
 xlist = np.array([])
 ylist = np.array([])
 philist = np.array([])
-for x in range(N):
-    for y in range(N):
+Ulist = np.array([])
+Vlist = np.array([])
+for x in range(N-1):
+    for y in range(N-1):
         xlist = np.append(xlist , x)
         ylist = np.append(ylist , y)
         philist = np.append(philist , phimap[y][x])
+        Ulist = np.append((phimap[y][x+1]-phimap[y][x]),Ulist)
+        Vlist = np.append((phimap[y+1][x]-phimap[y][x]),Vlist)
 print(x,y,phimap[y][x])
 fig = plt.figure()
-ax = Axes3D(fig)
 
 
-#.plotで描画
-#linestyle='None'にしないと初期値では線が引かれるが、3次元の散布図だと大抵ジャマになる
-#markerは無難に丸
-ax.plot(xlist,ylist,philist,marker="o",linestyle='None',markersize=1)
 
+plt.quiver(xlist,ylist,Ulist,Vlist,color = 'red' )
 
-#最後に.show()を書いてグラフ表示
+plt.draw()
 plt.show()
