@@ -28,10 +28,10 @@ flagmap = [[False for i in range(N)] for j in range(N)]
 for x in np.arange(-0.1,0.1,dr):
     xDex = m2Dex(x)
     yDex = m2Dex(0.1)
-    phimap[yDex][xDex] = V
+    phimap[yDex][xDex] = V/2
     flagmap[yDex][xDex] = True
     yDex = m2Dex(-0.1)
-    phimap[yDex][xDex] = 0
+    phimap[yDex][xDex] = -V/2
     flagmap[yDex][xDex] = True
 #print(rhomap)
 count = 0
