@@ -1,37 +1,27 @@
 import numpy as np
-import math
 import functions as func
+import math
 
-sub = func.subtool
-Efield = sub.SampleFunc({"x":-0.1,"y":-0.1,"z":-0.1},{"x":1.0,"y":1.0,"z":1.0},{"x":0.0,"y":0.0,"z":500.0})
-Bfield = sub.SampleFunc({"x":-0.1,"y":-0.1,"z":-0.1},{"x":0.1,"y":0.1,"z":0.1},{"x":0.0,"y":0.0,"z":0.0})
-
+print("input start")
 I = func.InPut
-num, q, m, pos0, vec0, kind, number = I.inputCSV("OutTestSamE")
+inputDataSet = I.inputJson("OutTestE")
+print(inputDataSet)
 
-R = {}
+print("input end")
+sub = func.subtool
+#Ef = func.Efield
+#Efield = Ef.Efield(Ef.makeGridParticle(0.000000000001))
+Efield = sub.SampleFunc(inputDataSet["EFieldplams"])
+Bfield = sub.SampleFunc(inputDataSet["BFieldplams"])
 
-for i in range(num):
+outputDataSet = sub.Calc(inputDataSet,Efield,Bfield)
+oput = func.OutPut.OutPut(outputDataSet,200,400)
 
-    #以下ルンゲクッタ法。
-    pos, vec = sub.runge(Efield, Bfield, q[i], m[i], pos0[i], vec0[i])
-
-    l = len(pos)
-
-    X = np.array([pos[j][0] for j in range(l)])
-    X = 1000*X
-    Y = np.array([pos[j][1] for j in range(l)])
-    Y = 1000*Y
-    Z = np.array([pos[j][2] for j in range(l)])
-    Z = 1000*Z
-
-    r = np.array([X, Y, Z])
-    R[str(i + 1)] = r
-
-plams = {"title":"Al_0.01%","x":R["1"][0],"y":R["1"][1],"z":R["1"][2]}
+l = len(outputDataSet["pData"]["x"][0])
 dt = sub.dt
 print("設定した座標に到達するまでにかかった時間は、", (l-1) * dt, "[s]です。")
 print("Excelで解析的に計算した結果は、1.22225577993463e-05[s]です")
+print("その差は",(l-1) * dt-0.0000122225577993463)
 
-oput = func.OutPut.OutPut(plams,Efield,Bfield,400,400)
 oput.Show()
+print("output end")

@@ -45,7 +45,7 @@ def Force(t, x, v, E, B, q, m):
     f = q*(E + u)/m
     return f
 
-def Calc(inputDataSet,Efield,Bfield):
+def Calc(inputDataSet,Efield,Bfield,rungeLimit = float("inf")):
     pData = {"x": [],
              "y": [],
              "z": [],
@@ -57,7 +57,7 @@ def Calc(inputDataSet,Efield,Bfield):
 
         #以下ルンゲクッタ法。
         print("runge start")
-        pos, vec ,timestamp = Runge(Efield, Bfield, particlePlams)
+        pos, vec ,timestamp = Runge(Efield, Bfield, particlePlams,rungeLimit)
         print("runge end")
         l = len(pos)
         X = np.array([pos[j][0] for j in range(l)])
@@ -82,7 +82,7 @@ def Calc(inputDataSet,Efield,Bfield):
 
 
 
-def Runge(Efield, Bfield,pPlams):
+def Runge(Efield, Bfield,pPlams,limit):
     q = pPlams["q"]
     m = pPlams["m"]
     pos0 = pPlams["pos"]
@@ -93,7 +93,7 @@ def Runge(Efield, Bfield,pPlams):
     vec = np.append(vec, np.array([vec0]), axis=0)
     timestamp = [0]
     i = 0
-    limit = float("inf")
+    #limit = float("inf")
     t = 0
     flag = False
     while 1:
