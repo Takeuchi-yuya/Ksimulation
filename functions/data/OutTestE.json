@@ -1,0 +1,19 @@
+{
+
+  "EFieldplams":{
+          "startPos":{"x":-0.1,"y":-0.1,"z":-0.1},
+          "endPos":{"x":1.0,"y":1.0,"z":1.0},
+          "vector":{"x":0.0,"y":0.0,"z":500.0}
+        },
+
+  "BFieldplams":{
+          "startPos":{"x":-0.1,"y":-0.1,"z":-0.1},
+          "endPos":{"x":1.0,"y":1.0,"z":1.0},
+          "vector":{"x":0.0,"y":0.0,"z":0.0}
+        },
+
+  "particlePlams":[
+                  {"name":"Al:vec0","kind":"Al","val":3,"pos":[0,0,0],"vec":[0,0,0]}
+                  ]
+
+}
