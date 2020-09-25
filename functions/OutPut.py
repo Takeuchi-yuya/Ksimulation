@@ -41,25 +41,17 @@ class OutPut():
 
 
     def Show(self):
-        fig = plt.figure(figsize=(10, 7))
-        ax = plt.subplot2grid((2,2),(0,0))
-        ay = plt.subplot2grid((2,2),(0,1))
-        az = plt.subplot2grid((2,2),(1,0))
-        a3d = plt.subplot2grid((2,2),(1,1),projection='3d')
-        ax = self.twoDPlot(ax,"x")
-        ay = self.twoDPlot(ay,"y")
-        az = self.twoDPlot(az,"z")
+        fig = plt.figure()
+        ax = plt.subplot2grid((1,2),(0,0))
+        a3d = plt.subplot2grid((1,2),(0,1),projection='3d')
+        ax = self.twoDPlot(ax,"y")
         a3d = self.threeDPlot(a3d)
 
 
         if self.E != "":
-            ax = self.vectorTwoDPlot(self.E,ax,"x",'E')
-            ay = self.vectorTwoDPlot(self.E,ay,"y",'E')
-            az = self.vectorTwoDPlot(self.E,az,"z",'E')
+            ax = self.vectorTwoDPlot(self.E,ax,"y",'E')
         if self.B != "":
-            ax = self.vectorTwoDPlot(self.B ,ax,"x",'B')
-            ay = self.vectorTwoDPlot(self.B ,ay,"y",'B')
-            az = self.vectorTwoDPlot(self.B ,az,"z",'B')
+            ax = self.vectorTwoDPlot(self.B ,ax,"y",'B')
         plt.tight_layout()
         plt.show()
 
