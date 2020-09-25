@@ -13,26 +13,26 @@ sub = func.subtool
 #Efield = Ef.Efield(Ef.makeGridParticle(0.000000000001))
 Efield = sub.SampleFunc(inputDataSet["EFieldplams"])
 Bfield = sub.SampleFunc(inputDataSet["BFieldplams"])
-rungeLimit = 19748
+rungeLimit = 23233
 outputDataSet = sub.Calc(inputDataSet,Efield,Bfield,rungeLimit)
-oput = func.OutPut.OutPut(outputDataSet,200,400)
+oput = func.OutPut.OutPut(outputDataSet,50,50)
 
 X = outputDataSet["pData"]["x"][0]
 X = np.array(X)
-Y = outputDataSet["pData"]["y"][0]
-Y = np.array(Y)
+Z = outputDataSet["pData"]["z"][0]
+Z = np.array(Z)
 
 #円の中心を求める
 cen_X = sum(X) / len(X)
-cen_Y = sum(Y) / len(Y)
-print("中心の座標は、[X, Y] = ", cen_X, cen_Y, "です")
+cen_Z = sum(Z) / len(Z)
+print("中心の座標は、[X, Z] = ", cen_X, cen_Z, "です")
 
 #各座標と中心との距離を計算する
 radius_X = X-cen_X
-radius_Y = Y-cen_Y
+radius_Z = Z-cen_Z
 radius = np.empty(0)
 for i in range(len(X)):
-    radius_tem = math.sqrt(radius_X[i]**2 + radius_Y[i]**2)
+    radius_tem = math.sqrt(radius_X[i]**2 + radius_Z[i]**2)
     radius = np.append(radius, radius_tem)
 
 #平均から半径を決定する
