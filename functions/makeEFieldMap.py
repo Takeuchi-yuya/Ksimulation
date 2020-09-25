@@ -6,7 +6,7 @@ import scipy.constants as cons
 #3次元プロットするためのモジュール
 from mpl_toolkits.mplot3d import Axes3D
 #行列N×N
-N = 200
+N = 100
 #演算範囲
 lim = 0.5
 #刻み幅
@@ -25,12 +25,12 @@ print("dr",lim*2/N)
 phimap = [[0 for j in range(N)] for i in range(N)]
 flagmap = [[False for i in range(N)] for j in range(N)]
 #とりあえず、y=0.1,-0.1,-0.1<x<0.1のとこに電荷置く
-for x in np.arange(-0.1,0.1,dr):
+for x in np.arange(-0.2,0.2,dr):
     xDex = m2Dex(x)
-    yDex = m2Dex(0.1)
+    yDex = m2Dex(0.2)
     phimap[yDex][xDex] = V/2
     flagmap[yDex][xDex] = True
-    yDex = m2Dex(-0.1)
+    yDex = m2Dex(-0.2)
     phimap[yDex][xDex] = -V/2
     flagmap[yDex][xDex] = True
 #print(rhomap)
@@ -93,11 +93,12 @@ for x in range(N-1):
         if maxE <(np.sqrt((phimap[y][x+1]-phimap[y][x])**2 + (phimap[y+1][x]-phimap[y][x])**2)/dr):
             maxE = (np.sqrt((phimap[y][x+1]-phimap[y][x])**2 + (phimap[y+1][x]-phimap[y][x])**2))/dr
             print(maxE)
+
+
 fig = plt.figure()
-
-
-
-plt.quiver(xlist,ylist,Ulist,Vlist,color = 'red' )
-
+ax = plt.subplot2grid((1,2),(0,0))
+ax2 = plt.subplot2grid((1,2),(0,1),projection='3d')
+ax.quiver(xlist,ylist,Ulist,Vlist,color = 'red' )
+ax2.scatter3D(xlist,ylist,philist,s = 0.05)
 plt.draw()
 plt.show()
