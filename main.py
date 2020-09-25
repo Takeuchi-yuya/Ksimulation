@@ -14,7 +14,7 @@ sub = func.subtool
 Efield = sub.SampleFunc(inputDataSet["EFieldplams"])
 Bfield = sub.SampleFunc(inputDataSet["BFieldplams"])
 outputDataSet = sub.Calc(inputDataSet,Efield,Bfield)
-oput = func.OutPut.OutPut(outputDataSet,200,400)
+oput = func.OutPut.OutPut(outputDataSet,100,200)
 
 
 #oput.TimePlot("x")

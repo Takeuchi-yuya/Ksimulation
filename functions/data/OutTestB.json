@@ -9,7 +9,7 @@
   "BFieldplams":{
           "startPos":{"x":-1000,"y":-1000,"z":-1000},
           "endPos":{"x":1000,"y":1000,"z":1000},
-          "vector":{"x":0.0,"y":0.0,"z":0.0505}
+          "vector":{"x":0.0,"y":0.0505,"z":0.0}
         },
 
   "particlePlams":[

@@ -1,7 +1,7 @@
 import numpy as np
 #とりあえず小さめなdt（十分小さいかは不明)
 #Eの確認は10**(-8)、Bの確認は10**(-6)
-dt = 10**(-8)
+dt = 10**(-9)
 #とりあえず、電荷を気にせず特定の座標範囲に並行電場を生成する関数を作ってみる。
 class SampleFunc():
     def __init__(self,fieldplams):
@@ -101,10 +101,11 @@ def Runge(Efield, Bfield,pPlams,limit):
         E = Efield.VectorField(dicPos)
         B = Bfield.VectorField(dicPos)
         #力の強いところで細かく刻む
-        if E == {"x" : 0,"y" : 0 , "z" : 0} and B == {"x" : 0,"y" : 0 , "z" : 0}:
-            tmp_dt = dt *100
-        else:
-            tmp_dt = dt
+        #if E == {"x" : 0,"y" : 0 , "z" : 0} and B == {"x" : 0,"y" : 0 , "z" : 0}:
+            #tmp_dt = dt *100
+        #else:
+            #tmp_dt = dt
+        tmp_dt = dt
         t = t + tmp_dt
         timestamp.append(t)
         B = [B["x"],B["y"],B["z"]]
@@ -130,9 +131,9 @@ def Runge(Efield, Bfield,pPlams,limit):
 
         for j in range(3):
 
-            if pos_tem[j] < -0.4:
+            if pos_tem[j] < -0.2:
                 flag = True
-            elif pos_tem[j] > 0.4:
+            elif pos_tem[j] > 0.2:
                 flag = True
 
         if flag:
