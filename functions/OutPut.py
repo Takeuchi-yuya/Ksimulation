@@ -99,6 +99,7 @@ class OutPut():
         else:
             ax.set_title(" 2DPlot(" + losAxis +" = "+ str(value)+")")
         ax.legend()
+        ax.grid()
         ax.set_xlabel(horizontal_name + "[mm]")
         ax.set_ylabel(vertical_name + "[mm]")
         ax.set_xlim([-self.horizontalLim,self.horizontalLim])
