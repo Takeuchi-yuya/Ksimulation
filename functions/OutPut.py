@@ -16,13 +16,22 @@ class OutPut():
         self.y = OPD["pData"]["y"]
         self.z = OPD["pData"]["z"]
         self.timestamp = OPD["pData"]["timestamp"]
-        self.q = OPD["pData"]["q"]
         self.E = OPD["E"]
         self.B = OPD["B"]
         self.horizontalLim = horizontalLim
         self.verticalLim = verticalLim
     #とりあえず、最初から三次元データが入力された状態で二次元に切り取って出力したい。
     #xy,yz,xzをそれぞれz,x,yで選択し値設定することで出力を試みる。
+    def AddPlams(self , plams ,timestamp = ""):
+        self.title.append(plams["title"])
+        self.x.append(plams["x"])
+        self.y.append(plams["y"])
+        self.z.append(plams["z"])
+        starttime = 0
+        endtime = starttime + len(self.x)*sub.dt
+        if timestamp == "":
+            timestamp = np.arange(starttime , endtime , sub.dt)
+        self.timestamp.append(timestamp)
     def TimePlot(self , axis):
         starttime = 0
         dt = sub.dt
@@ -44,21 +53,25 @@ class OutPut():
 
 
     def Show(self):
-        fig = plt.figure()
-        ax = plt.subplot2grid((1,2),(0,0))
-        a3d = plt.subplot2grid((1,2),(0,1),projection='3d')
-        ax = self.twoDPlot(ax,"y")
+        fig = plt.figure(figsize=(10, 7))
+        ax = plt.subplot2grid((2,2),(0,0))
+        ay = plt.subplot2grid((2,2),(0,1))
+        az = plt.subplot2grid((2,2),(1,0))
+        a3d = plt.subplot2grid((2,2),(1,1),projection='3d')
+        ax = self.twoDPlot(ax,"x")
+        ay = self.twoDPlot(ay,"y")
+        az = self.twoDPlot(az,"z")
         a3d = self.threeDPlot(a3d)
 
 
         if self.E != "":
-            ax = self.vectorTwoDPlot(self.E,ax,"y",'E')
+            ax = self.vectorTwoDPlot(self.E,ax,"x",'E')
+            ay = self.vectorTwoDPlot(self.E,ay,"y",'E')
+            az = self.vectorTwoDPlot(self.E,az,"z",'E')
         if self.B != "":
-<<<<<<< HEAD
             ax = self.vectorTwoDPlot(self.B ,ax,"x",'B')
             ay = self.vectorTwoDPlot(self.B ,ay,"y",'B')
             az = self.vectorTwoDPlot(self.B ,az,"z",'B')
-
 
         #csvファイル作成---------------------------
         #ディレクトリ作成
@@ -81,8 +94,6 @@ class OutPut():
             new_x_list[i].append(self.x[i].tolist())
             new_y_list[i].append(self.x[i].tolist())
             new_z_list[i].append(self.x[i].tolist())
-        #new_list = [new_x_list,new_y_list,new_z_list]
-        #print(new_list)
 
         #csvファイル書き出し
         with open(dataset_path,'w') as f:
@@ -93,13 +104,8 @@ class OutPut():
                 writer.writerow(new_z_list[i][0])
 
 
-=======
-            ax = self.vectorTwoDPlot(self.B ,ax,"y",'B')
->>>>>>> 4a125ba1de98034e8257514e197045cf46d20d4a
         plt.tight_layout()
         plt.show()
-
-
 
 
     def twoDPlot(self,ax,losAxis,value = ""):
@@ -145,7 +151,6 @@ class OutPut():
         else:
             ax.set_title(" 2DPlot(" + losAxis +" = "+ str(value)+")")
         ax.legend()
-        ax.grid()
         ax.set_xlabel(horizontal_name + "[mm]")
         ax.set_ylabel(vertical_name + "[mm]")
         ax.set_xlim([-self.horizontalLim,self.horizontalLim])
@@ -165,7 +170,6 @@ class OutPut():
 
 
     def vectorTwoDPlot(self,vf,ax,losAxis,type,value = 0):
-        print("vectorplot start")
         grid_count = 100
         horizontal_list = np.array([])
         vertical_list   = np.array([])
@@ -194,13 +198,12 @@ class OutPut():
                         vertical_list = np.append(vertical_list,vertical)
                         U_list = np.append(U_list,vector["x"])
                         V_list = np.append(V_list,vector["y"])
-        print("end")
         #bairitu
         #magnification = 10
         if type == 'E':
             magnification = 0.4
-            print(U_list)
-            print(V_list)
+            #print(U_list)
+            #print(V_list)
             ax.quiver(horizontal_list,vertical_list,magnification*U_list,magnification*V_list,color = 'red' ,angles='xy',scale_units='xy', scale=6.5)
         elif type == 'B':
             magnification = 8
