@@ -3,6 +3,9 @@ from matplotlib import pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 import csv
 from . import subtool as sub
+import pathlib
+import os
+import shutil
 #from CreatTestdata import SampleFunc as SF
 #とりあえず、二次元三次元アニメーションを外で選択できるようにclassで書いていく。
 
@@ -69,8 +72,45 @@ class OutPut():
             ax = self.vectorTwoDPlot(self.B ,ax,"x",'B')
             ay = self.vectorTwoDPlot(self.B ,ay,"y",'B')
             az = self.vectorTwoDPlot(self.B ,az,"z",'B')
+
+
+        #csvファイル作成---------------------------
+        #ディレクトリ作成
+        new_dir_path = 'tests/detasets'
+        try:
+            shutil.rmtree(new_dir_path)
+            os.mkdir(new_dir_path)
+        except FileNotFoundError :
+            os.mkdir(new_dir_path)
+        #path指定
+        dataset_path = 'tests/detasets/dataset.csv'
+        #ファイルの存在確認
+        if os.path.isfile(dataset_path) == True:
+            os.remove(dataset_path)
+        #リスト作成
+        new_x_list = [[] for i in range(len(self.x))]
+        new_y_list = [[] for i in range(len(self.x))]
+        new_z_list = [[] for i in range(len(self.x))]
+        for i in range(len(self.x)):
+            new_x_list[i].append(self.x[i].tolist())
+            new_y_list[i].append(self.x[i].tolist())
+            new_z_list[i].append(self.x[i].tolist())
+        #new_list = [new_x_list,new_y_list,new_z_list]
+        #print(new_list)
+
+        #csvファイル書き出し
+        with open(dataset_path,'w') as f:
+            writer = csv.writer(f)
+            for i in range(len(new_x_list)):
+                writer.writerow(new_x_list[i][0])
+                writer.writerow(new_y_list[i][0])
+                writer.writerow(new_z_list[i][0])
+
+
         plt.tight_layout()
         plt.show()
+
+
 
 
     def twoDPlot(self,ax,losAxis,value = ""):
