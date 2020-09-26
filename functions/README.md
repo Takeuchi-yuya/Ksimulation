@@ -36,7 +36,7 @@
 
 
 ### dataset
-以下予定（未実装）
+
 ```Python
 inputDataSet = {
                   EFieldplams: {
@@ -67,7 +67,7 @@ inputDataSet = {
 outputDataSet = {
                   E:              電場のinstance
                   B:              磁場のinstance
-                  pData: 
+                  pData:
                                   title:          []粒子の種類と価数
                                   x:              []xの軌跡data
                                   y:              []yの軌跡data

@@ -1,0 +1,24 @@
+{
+
+  "EFieldplams":{
+          "startPos":{"x":-0.1,"y":-0.1,"z":-0.1},
+          "endPos":{"x":0.1,"y":0.1,"z":0.1},
+          "vector":{"x":50.0,"y":0.0,"z":0.0}
+        },
+
+  "BFieldplams":{
+          "startPos":{"x":-0.1,"y":-0.1,"z":-0.1},
+          "endPos":{"x":0.1,"y":0.1,"z":0.1},
+          "vector":{"x":0.0,"y":0.005,"z":0.0}
+        },
+
+  "particlePlams":[
+                  {"name":"Al:vec7500","kind":"Sn","val":1,"pos":[0,0,-0.2],"vec":[0,0,7500]},
+                  {"name":"Al:vec8500","kind":"Sn","val":2,"pos":[0,0,-0.2],"vec":[0,0,8500]},
+                  {"name":"Al:vec10000","kind":"Sn","val":4,"pos":[0,0,-0.2],"vec":[0,0,10000]},
+                  {"name":"Al:vec12000","kind":"Sn","val":6,"pos":[0,0,-0.2],"vec":[0,0,12000]},
+                  {"name":"Al:vec16000","kind":"Sn","val":8,"pos":[0,0,-0.2],"vec":[0,0,16000]}
+                  ]
+
+
+}

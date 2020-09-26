@@ -1,6 +1,7 @@
 import numpy as np
 import math as ma
 import csv
+import json
 
 Na = 6.02*100000000000000000000000
 q_e = 1.6/10000000000000000000
@@ -11,7 +12,7 @@ atm = {"H":1.00794,"He":4.00260,"Li":6.941,"Be":9.01218,"B":10.81,"C":12.01,"N":
     "Ca":40.08,"Sc":44.96,"Ti":47.88,"V":50.94,"Cr":52.00,"Mn":54.94,"Fe":55.85,"Co":58.93,"Ni":58.69,"Cu":63.55, \
     "Zn":65.39,"Ga":69.72,"Ge":72.61,"As":74.92,"Se":78.96,"Br":79.90,"Kr":83.80,"Rb":85.47,"Sr":87.62,"Y":88.91, \
     "Zr":91.22,"Nb":92.91,"Mo":95.94,"Tc":99,"Ru":101.1,"Rh":102.9,"Pb":106.4,"Ag":107.9,"Cd":112.4,"In":114.8, \
-    "Sn":118.7,"Sb":121.8,"Te":127.6,"I":126.9,"Xe":131.3,"Cs":132.9,"Ba":137.3,"La":138.9,"Ce":140.1,"Pr":140.9, \
+    "Sn":132,"Sb":121.8,"Te":127.6,"I":126.9,"Xe":131.3,"Cs":132.9,"Ba":137.3,"La":138.9,"Ce":140.1,"Pr":140.9, \
     "Nd":144.2}
 input_PATH = 'functions/data/'
 def inputCSV(name):
@@ -124,6 +125,25 @@ def inputCSV(name):
 
 
 
+    return inputDataSet
+
+def inputJson(name):
+    path = input_PATH + name +'.json'
+    with open(path, 'r') as f:
+        inputDataSet = json.load(f)
+
+    for num in range(len(inputDataSet["particlePlams"])):
+        if inputDataSet["particlePlams"][num]["kind"] == "e":
+            q = -q_e
+            m = 9.11/10000000000000000000000000000000
+        elif inputDataSet["particlePlams"][num]["kind"] == "p":
+            q = q_e
+            m = 1.673/1000000000000000000000000000
+        else:
+            q = inputDataSet["particlePlams"][num]["val"]*q_e
+            m = atm[inputDataSet["particlePlams"][num]["kind"]]/Na/1000
+        inputDataSet["particlePlams"][num]["q"] = q
+        inputDataSet["particlePlams"][num]["m"] = m
     return inputDataSet
 
 def inputManual():
