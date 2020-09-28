@@ -98,7 +98,7 @@ class OutPut():
             ax.set_title(" 2DPlot(" + horizontal_name + vertical_name +")")
         else:
             ax.set_title(" 2DPlot(" + losAxis +" = "+ str(value)+")")
-        ax.legend()
+        ax.legend(markerscale = 10)
         ax.grid()
         ax.set_xlabel(horizontal_name + "[mm]")
         ax.set_ylabel(vertical_name + "[mm]")
