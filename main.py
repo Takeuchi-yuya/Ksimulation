@@ -4,7 +4,7 @@ import functions as func
 
 print("input start")
 I = func.InPut
-inputDataSet = I.inputJson("sample")
+inputDataSet = I.inputJson("sample2")
 print(inputDataSet)
 
 print("input end")
