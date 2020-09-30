@@ -42,10 +42,10 @@ class OutPut():
 
     def Show(self):
         fig = plt.figure()
-        ax = plt.subplot2grid((1,2),(0,0))
-        a3d = plt.subplot2grid((1,2),(0,1),projection='3d')
+        ax = plt.subplot2grid((1,1),(0,0))
+        #a3d = plt.subplot2grid((1,2),(0,1),projection='3d')
         ax = self.twoDPlot(ax,"y")
-        a3d = self.threeDPlot(a3d)
+        #a3d = self.threeDPlot(a3d)
 
 
         if self.E != "":
@@ -98,7 +98,7 @@ class OutPut():
             ax.set_title(" 2DPlot(" + horizontal_name + vertical_name +")")
         else:
             ax.set_title(" 2DPlot(" + losAxis +" = "+ str(value)+")")
-        ax.legend(markerscale = 10)
+        ax.legend(markerscale = 10, ncol=2)
         ax.grid()
         ax.set_xlabel(horizontal_name + "[mm]")
         ax.set_ylabel(vertical_name + "[mm]")
@@ -152,7 +152,7 @@ class OutPut():
         #bairitu
         #magnification = 10
         if type == 'E':
-            magnification = 0.4
+            magnification = 0.001
             print(U_list)
             print(V_list)
             ax.quiver(horizontal_list,vertical_list,magnification*U_list,magnification*V_list,color = 'red' ,angles='xy',scale_units='xy', scale=6.5)
