@@ -1,4 +1,5 @@
 import numpy as np
+import matplotlib as mpl
 from matplotlib import pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 import csv
@@ -102,6 +103,9 @@ class OutPut():
         ax.grid()
         ax.set_xlabel(horizontal_name + "[mm]")
         ax.set_ylabel(vertical_name + "[mm]")
+        ax.xaxis.set_major_locator(mpl.ticker.MultipleLocator(10))
+        ax.xaxis.set_minor_locator(mpl.ticker.MultipleLocator(5))
+        ax.tick_params(axis = "x",top = True,labeltop = True,labelrotation = 45 , which = "both")
         ax.set_xlim([-self.horizontalLim,self.horizontalLim])
         ax.set_ylim([-self.verticalLim,self.verticalLim])
         return ax

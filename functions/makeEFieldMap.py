@@ -14,9 +14,8 @@ dr = lim*2/N
 #真空中の誘電率
 e = 8.854e-12
 V = 168 #[V/m]
-#系内の最大の電位を入れる変数．ある有限の値を入れておく(ゼロ割り防止)
-MaxPhi = 1.0e-10
 def m2Dex(m):
+    
     return int((m + lim)/dr)
 
 
@@ -61,7 +60,6 @@ while MaxErr>Conv:
     MaxErr = CurErr = 0.0
     count = 1 + count
 
-    flag = False
     for x in range(1,N-1):
         for y in range(1,N-1):
             for z in range(1,N-1):
