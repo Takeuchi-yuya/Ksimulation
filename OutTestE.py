@@ -21,7 +21,7 @@ l = len(outputDataSet["pData"]["x"][0])
 dt = sub.dt
 print("設定した座標に到達するまでにかかった時間は、", (l-1) * dt, "[s]です。")
 print("Excelで解析的に計算した結果は、8.64265350336229e-06[s]です")
-print("その差は",(l-1) * dt-0.00000864265350336229)
+print("その差は",(l-1) * dt-0.00000864265350336229,"[s]です")
 
 oput.Show()
 print("output end")
