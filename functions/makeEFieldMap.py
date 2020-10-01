@@ -22,17 +22,19 @@ def m2Dex(m):
 
 print("dr",lim*2/N)
 #とりあえず二次元
-phimap = [[0 for j in range(N)] for i in range(N)]
-flagmap = [[False for i in range(N)] for j in range(N)]
+phimap = [[[0 for k in range(N)] for j in range(N)] for i in range(N)]
+flagmap = [[[False for k in range(N)] for i in range(N)] for j in range(N)]
 #とりあえず、y=0.1,-0.1,-0.1<x<0.1のとこに電荷置く
-for x in np.arange(-0.2,0.2,dr):
-    xDex = m2Dex(x)
-    yDex = m2Dex(0.2)
-    phimap[yDex][xDex] = V/2
-    flagmap[yDex][xDex] = True
-    yDex = m2Dex(-0.2)
-    phimap[yDex][xDex] = -V/2
-    flagmap[yDex][xDex] = True
+for z in np.arange(-0.2,0.2,dr):
+    for y in np.arange(-0.2,0.2,dr):
+        xDex = m2Dex(0.2)
+        yDex = m2Dex(y)
+        zDex = m2Dex(z)
+        phimap[xDex][yDex][zDex] = V/2
+        flagmap[xDex][yDex][zDex] = True
+        yDex = m2Dex(-0.2)
+        phimap[xDex][yDex][zDex] = -V/2
+        flagmap[xDex][yDex][zDex] = True
 #print(rhomap)
 count = 0
 '''
@@ -62,43 +64,18 @@ while MaxErr>Conv:
     flag = False
     for x in range(1,N-1):
         for y in range(1,N-1):
-            if flagmap[y][x]:
-                continue
-            Prev_phi = phimap[y][x]
-            tmp =1/4 * (phimap[y+1][x]+phimap[y-1][x]+phimap[y][x+1]+phimap[y][x-1])
-            if MaxPhi < abs(tmp):
-                MaxPhi = abs(tmp)
-            phimap[y][x] = tmp
-            CurErr = (abs(phimap[y][x] - Prev_phi))/MaxPhi
-            if MaxErr < CurErr:
-                 MaxErr = CurErr
-    if count % 100 == 0:
+            for z in range(1,N-1):
+                if flagmap[x][y][z]:
+                    continue
+                Prev_phi = phimap[x][y][z]
+                tmp =1/6 * (phimap[x+1][y][z]+phimap[x-1][y][z]+phimap[x][y+1][z]+phimap[x][y-1][z]+phimap[x][y][z+1]+phimap[x][y][z-1])
+                if MaxPhi < abs(tmp):
+                    MaxPhi = abs(tmp)
+                phimap[x][y][z] = tmp
+                CurErr = (abs(phimap[x][y][z] - Prev_phi))/MaxPhi
+                if MaxErr < CurErr:
+                     MaxErr = CurErr
+    if count % 10 == 0:
         print(count,MaxErr)
 
-print(count)
-        #print(phimap)
-xlist = np.array([])
-ylist = np.array([])
-philist = np.array([])
-Ulist = np.array([])
-Vlist = np.array([])
-maxE = 0
-for x in range(N-1):
-    for y in range(N-1):
-        xlist = np.append(xlist , x)
-        ylist = np.append(ylist , y)
-        philist = np.append(philist , phimap[y][x])
-        Ulist = np.append((phimap[y][x+1]-phimap[y][x])/dr,Ulist)
-        Vlist = np.append((phimap[y+1][x]-phimap[y][x])/dr,Vlist)
-        if maxE <(np.sqrt((phimap[y][x+1]-phimap[y][x])**2 + (phimap[y+1][x]-phimap[y][x])**2)/dr):
-            maxE = (np.sqrt((phimap[y][x+1]-phimap[y][x])**2 + (phimap[y+1][x]-phimap[y][x])**2))/dr
-            print(maxE)
-
-
-fig = plt.figure()
-ax = plt.subplot2grid((1,2),(0,0))
-ax2 = plt.subplot2grid((1,2),(0,1),projection='3d')
-ax.quiver(xlist,ylist,Ulist,Vlist,color = 'red' )
-ax2.scatter3D(xlist,ylist,philist,s = 0.05)
-plt.draw()
-plt.show()
+np.save(phimap,phimap)
