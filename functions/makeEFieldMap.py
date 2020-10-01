@@ -15,7 +15,7 @@ dr = lim*2/N
 e = 8.854e-12
 V = 168 #[V/m]
 def m2Dex(m):
-    
+
     return int((m + lim)/dr)
 
 
@@ -55,6 +55,7 @@ for i in range(N):
 '''
 MaxErr = 1
 Conv = 10**(-6)
+MaxPhi = 1
 while MaxErr>Conv:
     #print(phimap)
     MaxErr = CurErr = 0.0
@@ -76,4 +77,4 @@ while MaxErr>Conv:
     if count % 10 == 0:
         print(count,MaxErr)
 
-np.save(phimap,phimap)
+np.save("phimap",phimap)
