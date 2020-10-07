@@ -36,23 +36,7 @@ for z in np.arange(-0.2,0.2,dr):
         flagmap[xDex][yDex][zDex] = True
 #print(rhomap)
 count = 0
-'''
-#外周の電位を計算して入れておく
-def calc(pos):
-    phi = 0
-    for rho in rholist:
-        r = np.sqrt((pos[0]-rho[0])**2 + (pos[0]-rho[0])**2)*dr
-        #print(r)
-        if r != 0:
-            phi = 1/(4*np.pi*e)*rho[2]/r + phi
-    print(phi)
-    return phi
-for i in range(N):
-    phimap[0][i]   = calc([0,i])
-    phimap[N-1][i] = calc([N-1,i])
-    phimap[i][0]   = calc([i,0])
-    phimap[i][N-1] = calc([i,N-1])
-'''
+
 MaxErr = 1
 Conv = 10**(-6)
 MaxPhi = 1
