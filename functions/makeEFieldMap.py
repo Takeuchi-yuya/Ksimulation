@@ -6,7 +6,7 @@ import scipy.constants as cons
 #3次元プロットするためのモジュール
 from mpl_toolkits.mplot3d import Axes3D
 #行列N×N
-N = 100
+N = 200
 #演算範囲
 lim = 0.5
 #刻み幅
@@ -58,7 +58,7 @@ while MaxErr>Conv:
                 CurErr = (abs(phimap[x][y][z] - Prev_phi))/MaxPhi
                 if MaxErr < CurErr:
                      MaxErr = CurErr
-    if count % 10 == 0:
+    if count % 1 == 0:
         print(count,MaxErr)
 
 np.save("phimap",phimap)
