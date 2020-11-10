@@ -59,6 +59,8 @@ class OutPut():
 
 
     def twoDPlot(self,ax,losAxis,value = ""):
+        horizontal_name = ""
+        vertical_name = ""
         for x,y,z,title in zip(self.x,self.y,self.z,self.title):
             horizontal_list = np.array([])
             vertical_list = np.array([])
