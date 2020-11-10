@@ -1,12 +1,12 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import scipy.constants as cons
-
+import json
 
 #3次元プロットするためのモジュール
 from mpl_toolkits.mplot3d import Axes3D
 #行列N×N
-N = 200
+N = 100
 #演算範囲
 lim = 0.5
 #刻み幅
@@ -61,4 +61,8 @@ while MaxErr>Conv:
     if count % 1 == 0:
         print(count,MaxErr)
 
-np.save("phimap",phimap)
+path = "./data/phimap.json"
+json_dict ={
+    "N":N,
+    "lim"
+}
