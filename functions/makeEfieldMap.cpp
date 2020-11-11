@@ -1,6 +1,4 @@
-#include<stdio.h>
-#include<stdbool.h>
-#include<stdlib.h>
+#include<iostream>
 #include<math.h>
 #define N 200
 #define LIM 0.5
@@ -131,6 +129,7 @@ int main(){
     }
   }
   printf("%d\n",count);
+
   free_3dim_array((void***)phimap, N, N, N);
   free_3dim_array((void***)flagmap, N, N, N);
 
