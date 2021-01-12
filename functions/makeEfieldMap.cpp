@@ -1,6 +1,4 @@
-#include<stdio.h>
-#include<stdbool.h>
-#include<stdlib.h>
+#include<iostream>
 #include<math.h>
 #define N 200
 #define LIM 0.5
@@ -8,12 +6,12 @@
 #define V 16800
 #define dr LIM*2.0/N
 int m2Dex(float m){
-  printf("%lf\n dr = %lf\n",m+LIM,dr);
+  //printf("%lf\n dr = %lf\n",m+LIM,dr);
   float tmp1 = dr;
   float tmp2 = m+LIM;
   float tmp3 = tmp2/tmp1;
-  printf("1 = %lf\n 2  = %lf\n 3 = %lf\n",tmp1,tmp2,tmp3);
-  printf("int = %d\n",(int)round(tmp3));
+  //printf("1 = %lf\n 2  = %lf\n 3 = %lf\n",tmp1,tmp2,tmp3);
+  //printf("int = %d\n",(int)round(tmp3));
   return ((int)round(tmp3));
 }
 
@@ -131,6 +129,7 @@ int main(){
     }
   }
   printf("%d\n",count);
+
   free_3dim_array((void***)phimap, N, N, N);
   free_3dim_array((void***)flagmap, N, N, N);
 
