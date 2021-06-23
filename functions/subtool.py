@@ -1,7 +1,8 @@
 import numpy as np
+import math
 #とりあえず小さめなdt（十分小さいかは不明)
 #Eの確認は10**(-8)、Bの確認は10**(-6)
-dt = 10**(-9)
+dt = 10**(-7)
 #とりあえず、電荷を気にせず特定の座標範囲に並行電場を生成する関数を作ってみる。
 class SampleFunc():
     def __init__(self,fieldplams):
@@ -157,3 +158,15 @@ if __name__ == '__main__':
     pos = PosLToDic([0,0,0])
     tmp = vf.VectorField(pos)
     print(tmp)
+
+def NumberOfParticles(Number=100):
+    p = []
+    exp = math.e
+    for i in range(20):
+        j = i+1
+        d = math.pow(exp, -0.2*j)
+        x = Number * d
+        x = int(x)
+        p.append(x)
+
+    return p
