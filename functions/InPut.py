@@ -214,3 +214,9 @@ def inputVec():
     v = np.empty((0,3), float)
     v = np.append(v, np.array([v0]), axis=0)
     return v
+
+def vec_first(inputdataset, potential_kV = 10):
+    l = len()
+    v_fir = inputdataset["particlePlams"][]
+    U = potential_kV
+    v = np.squt(2*)
